@@ -1,0 +1,14 @@
+#[DEFAULT]
+#
+[login]
+baseurl = http://192.168.10.146:8080/ContentManager_10_2
+username = administrator
+password = P-38_Vandalay
+
+[networks]
+network_0=2
+network_1=3
+invalid_network=1000
+
+[path]
+media = media/

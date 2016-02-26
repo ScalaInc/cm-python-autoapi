@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to autoapi’s documentation! &mdash; autoapi 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="autoapi 0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">autoapi 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-autoapi-s-documentation">
+<h1>Welcome to autoapi&#8217;s documentation!<a class="headerlink" href="#welcome-to-autoapi-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-framework.authentication_rest"></span><dl class="function">
+<dt id="framework.authentication_rest.get_auth_token">
+<tt class="descclassname">framework.authentication_rest.</tt><tt class="descname">get_auth_token</tt><big>(</big><em>session</em><big>)</big><a class="headerlink" href="#framework.authentication_rest.get_auth_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Authorization Token associated with the current session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; A logged in requests.session object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A String containing the Authorization token associated with the session</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.authentication_rest.login">
+<tt class="descclassname">framework.authentication_rest.</tt><tt class="descname">login</tt><big>(</big><em>username</em>, <em>password</em>, <em>base_url</em>, <em>networkID=0</em><big>)</big><a class="headerlink" href="#framework.authentication_rest.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method that logs into the CM and returns a session object containing a valid auth token and valid token cookie</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>username</strong> (<em>String</em>) &#8211; Login Username.</li>
+<li><strong>password</strong> (<em>String</em>) &#8211; Login Password.</li>
+<li><strong>base_url</strong> (<em>String</em>) &#8211; Base URL for CM under test.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">requests.session object for the current session with the CM</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError if the Authorization token is not returned. This could indicate that the username/password is not correct and/or that the connection did not complete</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.authentication_rest.logout">
+<tt class="descclassname">framework.authentication_rest.</tt><tt class="descname">logout</tt><big>(</big><em>session</em>, <em>baseurl</em><big>)</big><a class="headerlink" href="#framework.authentication_rest.logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the current session out of the CM.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; The requests.session object that will be logged out</li>
+<li><strong>baseurl</strong> &#8211; The base url for the CM under test (defaults to <a class="reference external" href="http:/">http:/</a>/&lt;IP&gt;:&lt;udp port&gt;/ContentManager/)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if logoff is successful.  False otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-framework.users_rest"></span><dl class="class">
+<dt id="framework.users_rest.user_cm">
+<em class="property">class </em><tt class="descclassname">framework.users_rest.</tt><tt class="descname">user_cm</tt><a class="headerlink" href="#framework.users_rest.user_cm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper class that builds a user json object for use in API testing. 
+Class methods &#8216;help&#8217; programmers by validating data before it can be
+placed into the main data object for the instance.</p>
+<dl class="method">
+<dt id="framework.users_rest.user_cm.add_attribute">
+<tt class="descname">add_attribute</tt><big>(</big><em>session</em>, <em>attribute</em><big>)</big><a class="headerlink" href="#framework.users_rest.user_cm.add_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the dictionary contained in attribute to self.user_data once 
+after vaidating attribute against allowed user fields.  
+self.user_data is left unchanged if any of the keys fail validation</p>
+<p>attribute values are not validated - only the keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.users_rest.user_cm.validate_attribute">
+<tt class="descname">validate_attribute</tt><big>(</big><em>attribute</em><big>)</big><a class="headerlink" href="#framework.users_rest.user_cm.validate_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the dictionary in attribute contains a single valid key value
+pair that can be added to the user data record.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-framework.constants"></span><dl class="class">
+<dt id="framework.constants.call_type">
+<em class="property">class </em><tt class="descclassname">framework.constants.</tt><tt class="descname">call_type</tt><a class="headerlink" href="#framework.constants.call_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum containing valid HTTP call types used by this system.  Currently the following are supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Call</th>
+<th class="head">Enum
+Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>get</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>post</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>put</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>delete</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.constants.valid_user_attributes">
+<em class="property">class </em><tt class="descclassname">framework.constants.</tt><tt class="descname">valid_user_attributes</tt><a class="headerlink" href="#framework.constants.valid_user_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Valid attributes for USER objects.  Used by the framework.user_rest module when validating input parameters.
+Only parameters in this list will be put into requests for &#8216;user&#8217; objects.</p>
+<p>For example, if I have an attirbute:  {&#8216;booga&#8217;:&#8217;&lt;some data value&#8217;&#8216;} it will be rejected by the add method in
+the user_rest module.  However, {&#8216;username&#8217;:&#8217;&lt;some data value&gt;&#8217;} will be added to the API request to the
+CM when adding a user because &#8216;username&#8217; is a member of this Enum</p>
+</dd></dl>
+
+<span class="target" id="module-framework.http_rest"></span><dl class="function">
+<dt id="framework.http_rest.rest_request">
+<tt class="descclassname">framework.http_rest.</tt><tt class="descname">rest_request</tt><big>(</big><em>session</em>, <em>type_of_call</em>, <em>baseurl=''</em>, <em>apiurl=''</em>, <em>params=None</em>, <em>proxy=False</em><big>)</big><a class="headerlink" href="#framework.http_rest.rest_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes an HTTP request into the passed seession object.  The URL used for the request can be found by
+concatenating baseurl and apiurl.  For example:</p>
+<p>baseurl = &#8216;<a class="reference external" href="http:/">http:/</a>/&lt;some CM IP&gt;:&lt;some CM upd port&gt;/ContentManager&#8217;
+apiurl = &#8216;/api/rest/&lt;some api location&gt;&#8217;</p>
+<p>This method will call:</p>
+<p>&#8216;<a class="reference external" href="http:/">http:/</a>/&lt;some CM IP&gt;:&lt;some CM upd port&gt;/ContentManager/api/rest/&lt;some api location&gt;</p>
+<p>Parameters are defined by the &#8216;params&#8217; parameter.  If type_of_call is &#8216;get,&#8217; parameters are passed in
+the url as query parameters.  For all other values of type_of_call, the parameters are encoded JSON objects
+in the body of the HTTP request.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; A logged in requests.session object</li>
+<li><strong>type_of_call</strong> &#8211; framework.constants enumeration of valid http call type (put/get/post etc.)</li>
+<li><strong>baseurl</strong> &#8211; String containing the url of the CM under test.  Usually configured in config/testconfig</li>
+<li><strong>apiurl</strong> &#8211; The second part of the URL for this call - specific to the REsT request being made</li>
+<li><strong>params</strong> &#8211; Dictionary containing the parameters for this call.</li>
+<li><strong>proxy</strong> &#8211; Set to true to use a proxy server when sending the call.  Use when debugging using a sniffing Proxy (Unsupported)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">response object representing the call</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first">Connection Error if the connection to the server could not be validated</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first">HTTPError if an HTTP error occurs</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first">URLRequired Error if the URL is not valid</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">TooManyRedirects Error if too many redirects occur</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-tests.test_login"></span><dl class="function">
+<dt id="tests.test_login.setup_module">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">setup_module</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.setup_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module runs once at the beginning of this test suite.  Nose automatically executes
+the commands in this module once when this test suite starts.  It configures the test suite
+by loading the runtime configuration information from it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.t_setup">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">t_setup</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.t_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method initializes the test session by logging into the CM under test and populating
+the session object used by this test suite.  The session object created by this method
+is authorized to send api commands to the CM under test.</p>
+<p>Setup is intended to be run before each test in this suite - ensuring that a new session
+is used for each test case (no side effects between test cases)</p>
+<p>Decorate each test case with: <strong>&#64;with_setup(setup, teardown)</strong></p>
+<p>Parameters read from config file:
+login.baseurl - the base url of the CM under test]
+login.username - the username used to log into the CM under test
+login.password - the password used by the scripts to log into the CM under test</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.t_teardown">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">t_teardown</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.t_teardown" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method logs off from the CM.  It is intended to be run after each test case in this test suite.
+Decorate each test case with:  <strong>&#64;with_setup(setup, teardown)</strong></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_1">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_1</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the GET /api/rest/auth/ping request in the ReST api for CM</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_2">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_2</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_2" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Validates the GET /api/rest/auth/get request in ReST api for CM</div></blockquote>
+<p>returns the correct username</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_3">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_3</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the GET /api/rest/auth/key request returns a key, nonce, and generator parameter</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_4">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_4</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the POST /api/rest/auth/secure login to the server using SSL
+Not yet supported!  Needs to be developed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_5">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_5</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the GET /api/rest/auth/switchNetwork/{networkID} Interface
+By switching to a different network.</p>
+<p>Requires that more than one network be licensed on the system.
+Not yet supported!  Needs to be developed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_login.test_6">
+<tt class="descclassname">tests.test_login.</tt><tt class="descname">test_6</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_login.test_6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the GET /api/rest/auth/switchNetwork/{networkID} Interface
+fails when I attempt to log into a network that does not exist
+Uses the config file to load a network ID that does not exist on
+the system under test.  Verify response code for request is 400.</p>
+<p>Parameter in the config file:
+[networks]
+invalid_network=y</p>
+<p>y is the network this test attempts to switch to...</p>
+</dd></dl>
+
+<span class="target" id="module-tests.test_users"></span><dl class="function">
+<dt id="tests.test_users.setup_module">
+<tt class="descclassname">tests.test_users.</tt><tt class="descname">setup_module</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_users.setup_module" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="function">
+<dt>
+<tt class="descclassname">tests.test_users.</tt><tt class="descname">setup_module</tt><big>(</big><big>)</big></dt>
+<dd></dd></dl>
+
+<p>This module runs once at the beginning of this test suite.  Nose automatically executes 
+the commands in this module once when this test suite starts</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_users.t_setup">
+<tt class="descclassname">tests.test_users.</tt><tt class="descname">t_setup</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_users.t_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters read from config file:
+login.baseurl - the base url of the CM under test]
+login.username - the username used to log into the CM under test
+login.password - the password used by the scripts to log into the CM under test</p>
+<p>This method initializes the test session by logging into the CM under test and populating 
+the session object used by this test suite.  The session object created by this method
+is authorized to send api commands to the CM under test.</p>
+<p>Setup is intended to be run before each test in this suite - ensuring that a new session
+is used for each test case (no side effects between test cases)</p>
+<p>Decorate each test case with: <strong>&#64;with_setup(setup, teardown)</strong></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tests.test_users.t_teardown">
+<tt class="descclassname">tests.test_users.</tt><tt class="descname">t_teardown</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_users.t_teardown" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method logs off from the CM.  It is inteded to be run after each test case in this test suite.
+Decorate each test case with:  <strong>&#64;with_setup(setup, teardown)</strong></p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to autoapi&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">autoapi 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Richard Kaye.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

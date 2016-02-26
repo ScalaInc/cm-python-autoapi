@@ -1,0 +1,112 @@
+#Performance tests URL archive written in YAML
+Playlist_Property:
+    Indy:
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****?fields=id,name,description,playlistType,pickPolicy,shuffleNoRepeatType,shuffleNoRepeatWithin,lastModified,categories,workgroups,createdDate,createdBy,modifiedBy,minDuration,maxDuration,prettifyDuration,enableSmartPlaylist,nonAdjacencies,conditions,htmlDuration,itemCount,transitionDuration,imageDuration,transition,smartPlaylistLimit,smartPlaylistItemLimit,smartPlaylistPickPolicy,smartPlaylistAutomaticUpdate,smartPlaylistAutomaticUpdateInterval,meetAllConditions,sortOrderEnable,sortBy,sortOrderAsc,readOnly,healthy,problemsCount,warningsCount
+        - api_call:
+            verb: get
+            url: /api/rest/categories?offset=0&limit=999999&search=&sort=&count=0&filters={}&fields=id,name,parentId,children
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}&fields=id,name,parentId,children
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}&fields=id,name,parentId,children
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/listTransitions?limit=1000
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****/items?offset=0&limit=999999&search=&sort=&count=0&filters={}
+    CM10.4:
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****?fields=id,name,description,playlistType,pickPolicy,shuffleNoRepeatType,shuffleNoRepeatWithin,lastModified,categories,workgroups,createdDate,createdBy,modifiedBy,minDuration,maxDuration,prettifyDuration,enableSmartPlaylist,nonAdjacencies,conditions,htmlDuration,itemCount,transitionDuration,imageDuration,transition,smartPlaylistLimit,smartPlaylistItemLimit,smartPlaylistPickPolicy,smartPlaylistAutomaticUpdate,smartPlaylistAutomaticUpdateInterval,meetAllConditions,sortOrderEnable,sortBy,sortOrderAsc,readOnly,healthy,problemsCount,warningsCount
+        - api_call:
+            verb: get
+            url: /api/rest/categories?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/transition?limit=1000
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****/items?offset=0&limit=999999&search=&sort=&count=0&filters={}
+    CM10.3.2:
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****?fields=id,name,description,playlistType,pickPolicy,shuffleNoRepeatType,shuffleNoRepeatWithin,lastModified,categories,workgroups,createdDate,createdBy,modifiedBy,minDuration,maxDuration,prettifyDuration,enableSmartPlaylist,nonAdjacencies,conditions,htmlDuration,itemCount,transitionDuration,imageDuration,transition,smartPlaylistLimit,smartPlaylistItemLimit,smartPlaylistPickPolicy,smartPlaylistAutomaticUpdate,smartPlaylistAutomaticUpdateInterval,meetAllConditions,sortOrderEnable,sortBy,sortOrderAsc,readOnly,healthy,problemsCount,warningsCount
+        - api_call:
+            verb: get
+            url: /api/rest/categories?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/transition?limit=1000
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/****/items?offset=0&limit=999999&search=&sort=&count=0&filters={}
+Playlist_Landing:
+    Indy:
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/search?offset=0&limit=250&search=&sort=-lastModified&count=0&filters={}&facets=type,playergroupCondition,category,categoryAssigned,workgroup,workgroupAssigned,sharedWorkgroup,channel,controlledByAdManager,status&fields=id,name,readOnly,playlistType,healthy,enableSmartPlaylist,lastModified,thumbnailDownloadPaths,prettifyDuration,workgroups,categories
+        - api_call:
+            verb: get
+#            url: /api/rest/playlists/search?offset=0&limit=250&search=&sort=&count=0&filters={"id":{"values":["36","35","34","60","5","1","3"],"comparator":"eq"}}&facets=&fields=id,healthy,problemsCount,warningsCount,itemCount,channelsCount,asSubPlaylistsCount,messagesCount
+            url: /api/rest/playlists/search?offset=0&limit=250&search=&sort=&count=0&filters={"id":{"values":****,"comparator":"eq"}}&facets=&fields=id,healthy,problemsCount,warningsCount,itemCount,channelsCount,asSubPlaylistsCount,messagesCount
+    CM10.4:
+        - api_call:
+            verb: get
+            url: /api/rest/playlists?offset=0&limit=10&search=&sort=-lastModified&count=0&filters={}&fields=id,name,playlistType,lastModified,thumbnailDownloadPaths,prettifyDuration,enableSmartPlaylist,channelsCount,asSubPlaylistsCount,readOnly,healthy,categories,workgroups
+        - api_call:
+            verb: get
+            url: /api/rest/playlists/types
+        - api_call:
+            verb: get
+            url: /api/rest/categories?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/workgroups?offset=0&limit=999999&search=&sort=&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/channels?offset=0&limit=999999&search=&sort=name&count=0&filters={}&fields=id,name
+        - api_call:
+            verb: get
+            url: /api/rest/playergroup?offset=0&limit=999999&search=&sort=name&count=0&filters={}
+        - api_call:
+            verb: get
+            url: /api/rest/playlists?offset=0&limit=10&search=&sort=&count=0&filters={"id":{"values":****,"comparator":"eq"}}&fields=id,healthy,problemsCount,warningsCount,itemCount
+Player_Landing:
+    Indy:
+        - api_call:
+            verb: get
+            url: /api/rest/misc/productinfo
+        - api_call:
+            verb: get
+            url: /api/rest/auth/get
+        - api_call:
+            verb: get
+            url: /api/rest/players/search?offset=0&limit=1000&search=&sort=name&count=0&filters={}&facets=type,playergroup,playergroupAssigned,channel,channelAssigned,distribution,softwareVersion,TTEL,WBEL,CEL,WEL,VCEL,MEL,N3DEL,QUEUE,LOCALVALEL,heartbeatOverdue,activePlayer,unhealthyPlayer&fields=id,name,enabled,type,channelName,active
+        - api_call:
+            verb: post
+            url: /api/rest/storage
+            pp:  {'ids': xxxx }
+        - api_call:
+            verb: get
+            url: /api/rest/distributions?offset=0&limit=99999&search=&sort=name&count=0&filters={"id":{"values":[1]}}&fields=id,name,driver
+        - api_call:
+            verb: get
+            url: /api/rest/players/xxxx/states
+    CM10.4:

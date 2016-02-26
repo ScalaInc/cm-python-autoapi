@@ -1,0 +1,40 @@
+username,password,confirmPassword,firstname,lastname,emailaddress,roles,roles,roles,roles,roles,roles,roles,roles
+t1,t1,t1,fn1,ln1,1blah@blah.com,Administrator,,,,,,,
+t2,t2,t2,fn2,ln2,2blah@blah.com,Graphic Designer,,,,,,,
+t3,t3,t3,fn3,ln3,3blah@blah.com,Message Editor,,,,,,,
+t4,t4,t4,fn4,ln4,4blah@blah.com,Message Manager,,,,,,,
+t5,t5,t5,fn5,ln5,5blah@blah.com,Network Manager,,,,,,,
+t6,t6,t6,fn6,ln6,6blah@blah.com,Player User,,,,,,,
+t7,t7,t7,fn7,ln7,7blah@blah.com,Schedule Manager,,,,,,,
+t8,t8,t8,fn8,ln8,8blah@blah.com,Viewer,,,,,,,
+t9,t9,t9,fn9,ln9,9blah@blah.com,Administrator,Graphic Designer,,,,,,
+t10,t10,t10,fn10,ln10,10blah@blah.com,Administrator,Graphic Designer,Message Editor,,,,,
+t11,t11,t11,fn11,ln11,11blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,,,,
+t12,t12,t12,fn12,ln12,12blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,,,
+t13,t13,t13,fn13,ln13,13blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,,
+t14,t14,t14,fn14,ln14,14blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,
+t15,t15,t15,fn15,ln15,15blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t16,t16,t16,fn16,ln16,16blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t17,t17,t17,fn17,ln17,17blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t18,t18,t18,fn18,ln18,18blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t19,t19,t19,fn19,ln19,19blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t20,t20,t20,fn20,ln20,20blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t21,t21,t21,fn21,ln21,21blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t22,t22,t22,fn22,ln22,22blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t23,t23,t23,fn23,ln23,23blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t24,t24,t24,fn24,ln24,24blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t25,t25,t25,fn25,ln25,25blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t26,t26,t26,fn26,ln26,26blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t27,t27,t27,fn27,ln27,27blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t28,t28,t28,fn28,ln28,28blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t29,t29,t29,fn29,ln29,29blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t30,t30,t30,fn30,ln30,30blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t31,t31,t31,fn31,ln31,31blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t32,t32,t32,fn32,ln32,32blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t33,t33,t33,fn33,ln33,33blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t34,t34,t34,fn34,ln34,34blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t35,t35,t35,fn35,ln35,35blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t36,t36,t36,fn36,ln36,36blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t37,t37,t37,fn37,ln37,37blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t38,t38,t38,fn38,ln38,38blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer
+t39,t39,t39,fn39,ln39,39blah@blah.com,Administrator,Graphic Designer,Message Editor,Message Manager,Network Manager,Player User,Schedule Manager,Viewer

@@ -1,0 +1,96 @@
+#[DEFAULT]
+#
+[login]
+baseurl = http://192.168.126.140:8080/ContentManager
+#baseurl = http://faraday.scala.com:33150/ContentManager
+username = administrator
+password = scala123
+#username = administrator
+#password = 12345678
+player_username = player_TABN
+player_password = 12345678
+
+[networks]
+network_0=2
+network_1=3
+invalid_network=1000
+
+[path]
+media = media/
+templates = templates/
+
+[test]
+#This string added to all objects created by test suites.  Multiple simultaneous instances of the same suite can run if this value is different for each instance
+namespace = tst01
+#This is the maximum number of seconds to wait for a thumbnail to be generated after a media is uploaded.
+media_upload_timeout = 20
+
+[media_items]
+mediafile_1 = 01_auto.jpg
+mediafile_2 = 02_auto.jpg
+mediafile_3 = 03_auto.jpg
+
+[template_items]
+templatefile_1 = Instagram_EMEA.scz
+templatefile_2 = PackageTest_Fixed.scz
+templatefile_3 = PeterTemplate3.scz
+templatefile_4 = Sup1553.scz
+templatefile_5 = PeterTemplate2.scz
+templatefile_6 = PeterTemplate2_a.scz
+templatefile_7 = PeterTemplate2_b.scz
+templatefile_8 = PeterTemplate2_c.scz
+
+[timer]
+uuid_minutes_to_wait = 3
+
+[database]
+password = AllFixed
+
+[api_info]
+# Note 11.0 Indy uses the following api versions
+api_version = 1.0
+api_version_authentication = 1.0
+api_version_category = 1.0
+api_version_distribution = 1.0
+api_version_file_directory = 1.0
+api_version_templates = 1.0
+api_version_media = 1.0
+api_version_media_metadata = 1.0
+api_version_fileupload = 1.0
+api_version_heartbeats = 1.0
+api_version_languages = 1.0
+api_version_player = 1.0
+api_version_player_group = 1.0
+api_version_player_health = 1.0
+api_version_player_metadata = 1.0
+api_version_playlist = 1.0
+api_version_reports = 1.0
+api_version_workgroup = 1.0
+api_version_messages = 1.0
+api_version_channels = 1.0
+api_version_framesets = 1.0
+api_version_network = 1.0
+api_version_storage = 1.0
+api_version_users = 1.0
+api_version_roles = 1.0
+api_version_authorization = 1.0
+api_version_miscellaneous = 1.0
+api_version_hosted_networks = 1.0
+api_version_license = 1.0
+
+[logging]
+perf_log_path = ./logs/perf_log.log
+
+[performance]
+num_players = 1000
+num_plangen = 15
+num_heartbeats = 20
+num_player_categories = 10
+num_workgroups = 10
+num_player_groups = 10
+# Valid values for CM software version are: Indy, CM10.4
+cm_sw_version = CM10.4
+#cm_sw_version = Indy
+
+[compression]
+isCompressedRequests = True

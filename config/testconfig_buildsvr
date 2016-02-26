@@ -1,0 +1,29 @@
+#[DEFAULT]
+#
+[login]
+baseurl = http://107.1.98.148:8080/ContentManager
+username = administrator
+password = scala
+
+[networks]
+network_0=2
+network_1=3
+invalid_network=1000
+
+[path]
+media = media/
+
+[test]
+#This string added to all objects created by test suites.  Multiple simultanious instances of the same suite can run if this value is different for each instance
+namespace = tst01
+
+[media_items]
+mediafile_1 = 01_auto.jpg
+mediafile_2 = 02_auto.jpg
+mediafile_3 = 03_auto.jpg
+
+[timer]
+uuid_minutes_to_wait = 3
+
+[database]
+password = postgres
