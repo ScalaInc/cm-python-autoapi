@@ -20,10 +20,6 @@ class Player(framework_object):
         '''
         super().__init__(api_version)
         
-        '''
-        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always one.
-        If we want to use this framework - we will need to fix that.
-        '''
     def create_player(self,
                       session,
                       baseurl,
@@ -32,7 +28,11 @@ class Player(framework_object):
                       type = "SCALA",
                       distribution_server_id = 1
                       ):
+        
         '''
+        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always one.
+        If we want to use this framework - we will need to fix that.
+        
         Uses the POST /api/rest/players api call to create a player
         :param session: The requests.session variable used to send the API call
         :param baseurl: The base url of the CM under test e.g. http//w.x.y.z:8080/ContentManager
