@@ -19,7 +19,11 @@ class Player(framework_object):
         :return: VOID
         '''
         super().__init__(api_version)
-
+        
+        '''
+        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always one.
+        If we want to use this framework - we will need to fix that.
+        '''
     def create_player(self,
                       session,
                       baseurl,
