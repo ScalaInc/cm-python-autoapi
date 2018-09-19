@@ -30,8 +30,9 @@ class Player(framework_object):
                       ):
         
         '''
-        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always one.
-        If we want to use this framework - we will need to fix that.
+        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
+        If we want to use this framework - we will need to fix that. I manually change this value in order to avoid a number of
+        errors that are created in the log because of this problem.
         
         Uses the POST /api/rest/players api call to create a player
         :param session: The requests.session variable used to send the API call
@@ -64,6 +65,10 @@ class Player(framework_object):
                                 distribution_server_id = 1
                                 ):
         '''
+        One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
+        If we want to use this framework - we will need to fix that. I manually change this value in order to avoid a number of
+        errors that are created in the log because of this problem.
+        
         Uses the POST /api/rest/players/multiPlayer api call to create multiple players
         :param session: The requests.session variable used to send the API call
         :param baseurl: The base url of the CM under test e.g. http//w.x.y.z:8080/ContentManager
