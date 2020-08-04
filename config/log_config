@@ -20,7 +20,7 @@ interval=midnight
 backupCount=5
 formatter=simple
 level=DEBUG
-args=('logs/testSuite.log',)
+args=('./logs/testSuite.log',)
 
 [handler_screen]
 class=StreamHandler
