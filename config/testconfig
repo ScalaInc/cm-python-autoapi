@@ -90,9 +90,9 @@ num_heartbeats = 20
 num_player_categories = 10
 num_workgroups = 10
 num_player_groups = 10
-# Valid values for CM software version are: Indy, CM10.4
-cm_sw_version = CM10.4
-#cm_sw_version = Indy
+# Valid values for CM software version are: Sydney, CM12.00
+cm_sw_version = CM12.00
+#cm_sw_version = Sydney
 
 [compression]
 isCompressedRequests = True
