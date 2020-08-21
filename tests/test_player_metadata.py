@@ -49,7 +49,7 @@ class TestPlayerMetadataEndpoint():
         pmd = Player_meta_data(api_version_player_metadata)
 
         # Create Boolean Metadata
-        pm_name1 = namespace + ' boolean_metadata'
+        pm_name1 = namespace + '_boolean_metadata'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=pm_name1,
@@ -59,7 +59,7 @@ class TestPlayerMetadataEndpoint():
         logging.info('ID of boolean metadata is: {}'.format(self.boolean_metadata_id))
 
         # Create string_any Metadata
-        self.pm_name2 = namespace + ' string_any_metadata'
+        self.pm_name2 = namespace + '_string_any_metadata'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.pm_name2,
@@ -69,7 +69,7 @@ class TestPlayerMetadataEndpoint():
         logging.info('ID of string any metadata is: {}'.format(self.string_any_metadata_id))
 
         # Create String Picklist Metadata
-        self.pm_name3 = namespace + ' string_picklist_metadata'
+        self.pm_name3 = namespace + '_string_picklist_metadata'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.pm_name3,
@@ -88,7 +88,7 @@ class TestPlayerMetadataEndpoint():
 
 
         # Create int Any metadata
-        self.pm_name4 = namespace + ' int_any_metadata'
+        self.pm_name4 = namespace + '_int_any_metadata'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.pm_name4,
@@ -98,7 +98,7 @@ class TestPlayerMetadataEndpoint():
         logging.info('ID of int any metadata is: {}'.format(self.int_any_id))
 
         # Create int Picklist metadata
-        self.pm_name5 = namespace + ' int_picklist_metadata'
+        self.pm_name5 = namespace + '_int_picklist_metadata'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.pm_name5,
@@ -185,7 +185,7 @@ class TestPlayerMetadataEndpoint():
             assert player_meta_data_object.create_metadata(session = self.test_session,
                                               baseurl = self.baseurl,
                                               data_type = metadata[0],
-                                              name = namespace + ' ' +metadata[0].name + ' ' + metadata[1].name,
+                                              name = namespace + '_' +metadata[0].name + '_' + metadata[1].name,
                                               value_type = metadata[1]),'Could not add media metadata object type ' + metadata[0].name + ' value ' + metadata[1].name
 
             self.player_metadata_id_list.append(player_meta_data_object.get_id())
@@ -210,7 +210,7 @@ class TestPlayerMetadataEndpoint():
             assert player_metadata_object.create_metadata(session = self.test_session,
                                               baseurl = self.baseurl,
                                               data_type = metadata[0],
-                                              name = namespace + ' ' +metadata[0].name + ' ' + metadata[1].name,
+                                              name = namespace + '_' +metadata[0].name + '_' + metadata[1].name,
                                               value_type = metadata[1]),'Could not add media metadata object type ' + metadata[0].name + ' value ' + metadata[1].name
 
             self.player_metadata_id_list.append(player_metadata_object.get_id())
@@ -352,7 +352,7 @@ class TestPlayerMetadataEndpoint():
 
         player_metadata_object = Player_meta_data(api_version_player_metadata)
 
-        new_name = 'foo foo foo pitang!'
+        new_name = 'foo_foo_foo_pitang'
 
         update_parameter = {'name': new_name}
 

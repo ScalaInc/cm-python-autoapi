@@ -9,8 +9,10 @@ password = admin1234
 #password = scala123
 #username = administrator
 #password = 12345678
-player_username = player_TABN
-player_password = 12345678
+#player_username = player_TABN
+#player_password = 12345678
+player_username = player_greg
+player_password = player1234
 
 [networks]
 network_0=2

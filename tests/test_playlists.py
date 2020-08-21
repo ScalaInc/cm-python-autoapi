@@ -455,7 +455,7 @@ class Test_playlists():
             }
         ]
         assert playlist_object.get_response_key(
-            'types') == version11_response, 'Incorrect return from reference fucntion test_list_playlist_types'
+            'types') == version11_response, 'Incorrect return from reference function test_list_playlist_types, %s' % (version11_response,)
 
     def test_list_playlists(self):
         '''

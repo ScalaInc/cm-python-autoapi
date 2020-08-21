@@ -25,8 +25,8 @@ class Player(framework_object):
                       baseurl,
                       name,
                       description=None,
-                      type = "SCALA",
-                      distribution_server_id = 1
+                      type="SCALA",
+                      distribution_server_id=1053
                       ):
         
         '''
@@ -47,7 +47,7 @@ class Player(framework_object):
         player_parameter = {'name':name, 'type':type, 'distributionServer':{'id':distribution_server_id}}
         if description != None:
             player_parameter['description'] = description
-        self.last_response  = rest_request(session, type_of_call=type_of_call,baseurl=baseurl, apiurl = self.apiurl, payload_params=player_parameter)
+        self.last_response  = rest_request(session, type_of_call=type_of_call, baseurl=baseurl, apiurl=self.apiurl, payload_params=player_parameter)
         logging.debug('Called POST /api/rest/players: status_code = {}, response = {}, elapsed time= {}'.format(self.last_response.status_code, self.last_response.text, self.last_response.elapsed))
 
         if self.last_response.status_code == 200:
@@ -60,9 +60,9 @@ class Player(framework_object):
                                 baseurl,
                                 name,
                                 type = 'SCALA',
-                                start_at_player_number = 1,
-                                number_of_players =1,
-                                distribution_server_id = 1
+                                start_at_player_number=1,
+                                number_of_players=1,
+                                distribution_server_id=1053
                                 ):
         '''
         One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
@@ -80,11 +80,11 @@ class Player(framework_object):
         '''
         create_multiple_players_apiurl = '/api/rest/players/multiPlayer'
 
-        create_multiple_players_param = {'name':name,
-                                         'type':type,
-                                         'startAt':start_at_player_number,
-                                         'numOfPlayers':number_of_players,
-                                         'distributionServer':{'id':distribution_server_id}}
+        create_multiple_players_param = {'name': name,
+                                         'type': type,
+                                         'startAt': start_at_player_number,
+                                         'numOfPlayers': number_of_players,
+                                         'distributionServer':{'id': distribution_server_id}}
 
         self.last_response = rest_request(session = session,
                                           baseurl = baseurl,

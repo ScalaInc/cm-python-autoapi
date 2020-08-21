@@ -51,7 +51,7 @@ class TestMediaMetadataEndpoint():
         mmd = Media_meta_data(api_version_media_metadata)
 
         # Create Boolean Metadata
-        mm_name1 = namespace + ' boolean_metadata cm8456'
+        mm_name1 = namespace + '_boolean_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=mm_name1,
@@ -61,7 +61,7 @@ class TestMediaMetadataEndpoint():
         logging.info('ID of boolean metadata is: {}'.format(self.boolean_metadata_id))
 
         # Create string_any Metadata
-        self.mm_name2 = namespace + ' string_any_metadata cm8456'
+        self.mm_name2 = namespace + '_string_any_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name2,
@@ -71,7 +71,7 @@ class TestMediaMetadataEndpoint():
         logging.info('ID of string any metadata is: {}'.format(self.string_any_metadata_id))
 
         # Create String Picklist Metadata
-        self.mm_name3 = namespace + ' string_picklist_metadata cm8456'
+        self.mm_name3 = namespace + '_string_picklist_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name3,
@@ -90,7 +90,7 @@ class TestMediaMetadataEndpoint():
 
 
         # Create int Any metadata
-        self.mm_name4 = namespace + ' int_any_metadata cm8456'
+        self.mm_name4 = namespace + '_int_any_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name4,
@@ -100,7 +100,7 @@ class TestMediaMetadataEndpoint():
         logging.info('ID of int any metadata is: {}'.format(self.int_any_id))
 
         # Create int Picklist metadata
-        self.mm_name5 = namespace + ' int_picklist_metadata cm8456'
+        self.mm_name5 = namespace + '_int_picklist_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name5,
@@ -221,7 +221,7 @@ class TestMediaMetadataEndpoint():
             assert media_metadata_object.create_metadata(session=self.test_session,
                                                          baseurl=self.baseurl,
                                                          data_type=metadata[0],
-                                                         name=namespace + ' ' + metadata[0].name + ' ' + metadata[
+                                                         name=namespace + '_' + metadata[0].name + '_' + metadata[
                                                              1].name,
                                                          value_type=metadata[
                                                              1]), 'Could not add media metadata object type ' + \
@@ -249,7 +249,7 @@ class TestMediaMetadataEndpoint():
             assert media_metadata_object.create_metadata(session=self.test_session,
                                                          baseurl=self.baseurl,
                                                          data_type=metadata[0],
-                                                         name=namespace + ' ' + metadata[0].name + ' ' + metadata[
+                                                         name=namespace + '_' + metadata[0].name + '_' + metadata[
                                                              1].name,
                                                          value_type=metadata[1]), 'Could not add media metadata object type ' + metadata[0].name + ' value ' + metadata[1].name
 
@@ -400,7 +400,7 @@ class TestMediaMetadataEndpoint():
 
         media_metadata_object = Media_meta_data(api_version_media_metadata)
 
-        new_name = 'foo foo foo pitang!'
+        new_name = 'foo_foo_foo_pitang'
 
         update_parameter = {'name': new_name}
 
