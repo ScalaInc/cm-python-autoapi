@@ -8,6 +8,7 @@ from framework.constants import call_type
 from framework.http_rest import rest_request
 import time
 
+
 class framework_object():
     '''
     Base class for all other data objects used by framework - media, players etc.

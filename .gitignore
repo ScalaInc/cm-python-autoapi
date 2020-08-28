@@ -7,4 +7,6 @@
 *.xml
 *.xml.html
 *.bak
+*.html
 /autoapi_env/
+/tests_inprogress/__pycache__/
