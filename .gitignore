@@ -8,5 +8,6 @@
 *.xml.html
 *.bak
 *.html
+*.zip
 /autoapi_env/
 /tests_inprogress/__pycache__/
