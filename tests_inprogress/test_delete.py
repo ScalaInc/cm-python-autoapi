@@ -77,8 +77,8 @@ def test_delete_1000_media():
     global baseurl, session, api_version
     # Get a list of media items by ID
     media_object = Media(api_version)
-    assert media_object.list_media(session, baseurl, limit = 1000, fields = 'id')
+    assert media_object.list_media(session, baseurl, limit=1000, fields='id')
     logging.info('Found {} media items'.format(len(media_object.last_response.json()['list'])))
     for id in media_object.last_response.json()['list']:
         current_id = id['id']
-        assert media_object.delete_media_by_id(session,baseurl = baseurl,id = current_id)
+        assert media_object.delete_media_by_id(session, baseurl=baseurl, id=current_id)
