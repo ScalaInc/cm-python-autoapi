@@ -19,14 +19,16 @@ class Player(framework_object):
         :return: VOID
         '''
         super().__init__(api_version)
-        
+    # 1053 for GPG localhost:8080/ContentManager
+    # 1041 for Docker Kubernetes
+    # There are two places where you have to set distribution_server_id
     def create_player(self,
                       session,
                       baseurl,
                       name,
                       description=None,
                       type="SCALA",
-                      distribution_server_id=1053
+                      distribution_server_id=1041
                       ):
         
         '''
@@ -62,7 +64,7 @@ class Player(framework_object):
                                 type = 'SCALA',
                                 start_at_player_number=1,
                                 number_of_players=1,
-                                distribution_server_id=1053
+                                distribution_server_id=1041
                                 ):
         '''
         One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
