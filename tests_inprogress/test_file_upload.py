@@ -114,8 +114,8 @@ def test_endpoint_file_upload_file():
 
     # Get the Media back
     retrieve_media_apiurl = '/api/rest/media/' + str(media_id)
-    resp = rest_request(session, type_of_call= call_type.get, baseurl = baseurl, apiurl = retrieve_media_apiurl)
-    logging.info('Response  from media GET call is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
+    resp = rest_request(session, type_of_call=call_type.get, baseurl=baseurl, apiurl=retrieve_media_apiurl)
+    logging.info('Response  from media GET call is: status_code =  {}, response = {}'.format(resp.status_code, resp.text))
     assert resp.status_code == 200, 'Received incorrect response code after media get.  Expected 200, received {}'.format(resp.status_code)
     assert resp.json()['id'] == media_id, 'Incorrect media id retrieved by GET.  Expected {}, received {}'.format(media_id, resp.json()['id'])
 
@@ -171,13 +171,13 @@ def test_endpoint_file_upload_single_file():
 
     # Get the Media back
     retrieve_media_apiurl = '/api/rest/media/' + str(media_id)
-    resp = rest_request(session, type_of_call= call_type.get, baseurl = baseurl, apiurl = retrieve_media_apiurl)
+    resp = rest_request(session, type_of_call=call_type.get, baseurl=baseurl, apiurl=retrieve_media_apiurl)
     logging.info('Response  from media GET call is: is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 200, 'Received incorrect response code after media get.  Expected 200, received {}'.format(resp.status_code)
     assert resp.json()['id'] == media_id, 'Incorrect media id retrieved by GET.  Expected {}, received {}'.format(media_id, resp.json()['id'])
 
     # Delete media item to clean up
     delete_apiurl = '/api/rest/media/' + str(media_id)
-    resp = rest_request(session,type_of_call=call_type.delete, baseurl = baseurl, apiurl = delete_apiurl)
+    resp = rest_request(session, type_of_call=call_type.delete, baseurl = baseurl, apiurl=delete_apiurl)
     logging.info('Response  from delete call is: is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 204, 'Received incorrect response code during media delete call.'
