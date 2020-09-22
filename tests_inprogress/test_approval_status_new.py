@@ -59,9 +59,9 @@ class test_():
 
         #Determine the ID of Administrator role
         role_object = Roles(api_version_roles)
-        role_object.list_roles(session = self.test_session,
-                               baseurl = self.baseurl,
-                               search = 'Administrator')
+        role_object.list_roles(session=self.test_session,
+                               baseurl=self.baseurl,
+                               search='Administrator')
         assert 'id' in role_object.get_response_key('list')[0], 'Could not determine ID of Administrator'
 
         self.admin_role_id = role_object.get_response_key('list')[0]['id']
@@ -88,57 +88,57 @@ class test_():
         }"""
 
         user_object = Users(api_version_user)
-        assert user_object.create_user(session = self.test_session,
-                                baseurl = self.baseurl,
-                                name= self.unique_name,
-                                emailAddress = 'approval_status@scala.com',
-                                firstname= 'Approval',
-                                lastname = 'Status',
-                                username = approval_status_username,
-                                password = approval_status_password,
-                                role_list = [{'id': self.admin_role_id}]), 'Failed to create user during setup'
+        assert user_object.create_user(session=self.test_session,
+                                baseurl=self.baseurl,
+                                name=self.unique_name,
+                                emailAddress='approval_status@scala.com',
+                                firstname='Approval',
+                                lastname ='Status',
+                                username=approval_status_username,
+                                password=approval_status_password,
+                                role_list=[{'id': self.admin_role_id}]), 'Failed to create user during setup'
 
         self.user_id_list.append(user_object.get_response_key('id'))
 
         # Log in as new user
         self.api_auth_object2 = Auth_api(api_version_auth)
 
-        self.new_user_session = self.api_auth_object2.login(username = approval_status_username,
-                                                            password = approval_status_password,
-                                                            baseurl = self.baseurl)
+        self.new_user_session = self.api_auth_object2.login(username=approval_status_username,
+                                                            password=approval_status_password,
+                                                            baseurl=self.baseurl)
         assert self.new_user_session is not None, 'Failed to log into CM using user created during setup'
 
         # Create a media object to run this test on
 
         media_object = Media(api_version_media)
-        assert media_object.create_media(session = self.new_user_session,
-                                  baseurl = self.baseurl,
-                                  name = self.unique_name,
-                                  uri = 'http://approval_status.com'), 'Failed to create media object during setup'
+        assert media_object.create_media(session=self.new_user_session,
+                                  baseurl=self.baseurl,
+                                  name=self.unique_name,
+                                  uri='http://approval_status.com'), 'Failed to create media object during setup'
         self.media_id_list.append(media_object.get_id())
 
         # Create approval object for user created above on media created above
 
-        media_object.update_single_media(session = self.new_user_session,
-                                         baseurl = self.baseurl,
-                                         media_id = self.media_id_list[0],
-                                         field_change_dict = {'approval': {'action': 'APPROVE'}})
+        media_object.update_single_media(session=self.new_user_session,
+                                         baseurl=self.baseurl,
+                                         media_id=self.media_id_list[0],
+                                         field_change_dict={'approval': {'action': 'APPROVE'}})
 
 
     def teardown(self):
         # Delete media item created in this test case
         media_object = Media(api_version_media)
         for media_id in self.media_id_list:
-            media_object.delete_media_by_id(session = self.test_session,
-                                            baseurl = self.baseurl,
-                                            id = media_id)
+            media_object.delete_media_by_id(session=self.test_session,
+                                            baseurl=self.baseurl,
+                                            id=media_id)
 
         # Delete user item created in this test case
         user_object = Users(api_version_user)
         for user_id in self.user_id_list:
-            user_object.delete_user(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    user_id = user_id)
+            user_object.delete_user(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    user_id=user_id)
 
         # logout of session created for setup
         self.api_auth_object.logout()

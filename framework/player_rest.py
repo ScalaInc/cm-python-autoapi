@@ -19,7 +19,9 @@ class Player(framework_object):
         :return: VOID
         '''
         super().__init__(api_version)
-        
+    # 1053 for GPG localhost:8080/ContentManager
+    # 1041 for Docker Kubernetes
+    # There are two places where you have to set distribution_server_id
     def create_player(self,
                       session,
                       baseurl,
