@@ -47,6 +47,7 @@ class test_users():
         logging.info('Initializing session for test module setup.')
 
         self.test_session = self.api_auth_object.login(self.username, self.password, self.baseurl)
+        logging.debug("self.test_session {}".format(str(self.test_session)))
 
         # Set up unique string associated with this test for naming objects
         now = datetime.datetime.now()
@@ -54,36 +55,50 @@ class test_users():
 
         # Create a data structure with all the role ID and name information for use by test cases
         role_object = Roles(api_version_roles)
-        role_object.list_roles(session = self.test_session,
-                               baseurl = self.baseurl,
-                               limit = 100,
-                               fields = 'name,id')
+        role_object.list_roles(session=self.test_session,
+                               baseurl=self.baseurl,
+                               limit=100,
+                               fields='name,id')
         self.role_list_response = role_object.get_response_key('list')
+
+        logging.debug("self.role_list_response {}".format(str(self.role_list_response)))
 
         # Set up data structures to keep track of resources to delete at cleanup
         self.user_id_list = []
         user_object = Users(api_version_users)
         # Create 5 users that are used by test cases and automatically cleaned up after
         for user_number in range(5):
-            assert user_object.create_user(session = self.test_session,
-                                baseurl = self.baseurl,
-                                firstname = self.unique_name + " setup" + str(user_number),
-                                lastname = self.unique_name + " setup" + str(user_number),
-                                password = "a12345678",
-                                emailAddress= self.unique_name + str(user_number) +'setup@' + 'blah.com',
+            if user_number == 2:
+                assert user_object.create_user(session=self.test_session,
+                                baseurl=self.baseurl,
+                                firstname=self.unique_name + " setup" + str(user_number),
+                                lastname=self.unique_name + " setup" + str(user_number),
+                                password="a12345678",
+                                emailAddress=self.unique_name + str(user_number) +'setup@' + 'blah.com',
                                 username=self.unique_name + " setup" + str(user_number),
-                                name = "setup setup" + str(user_number),
-                                role_list = self.role_list_response), 'create user failed in setup for test_users.py'
+                                name="setup setup" + str(user_number),
+                                role_list=[self.role_list_response[user_number], self.role_list_response[1]]), 'create user failed in setup for test_users.py'
+            else:
+                assert user_object.create_user(session=self.test_session,
+                                baseurl=self.baseurl,
+                                firstname=self.unique_name + " setup" + str(user_number),
+                                lastname=self.unique_name + " setup" + str(user_number),
+                                password="a12345678",
+                                emailAddress=self.unique_name + str(user_number) +'setup@' + 'blah.com',
+                                username=self.unique_name + " setup" + str(user_number),
+                                name="setup setup" + str(user_number),
+                                role_list=self.role_list_response[user_number]), 'create user failed in setup for test_users.py'
             self.user_id_list.append(user_object.get_response_key('id'))
 
+        logging.debug("self.user_id_list: {} ".format(self.user_id_list))
 
     def teardown(self):
         # Delete users created during this test case
         user_object = Users(api_version_users)
         for user_id in self.user_id_list:
-            user_object.delete_user(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    user_id = user_id)
+            user_object.delete_user(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    user_id=user_id)
 
         # logout of session created for setup
         self.api_auth_object.logout()
@@ -100,22 +115,22 @@ class test_users():
         user_email = 'blah@blah.com'
         user_password = 'nah12345AAA'
 
-        assert user_object.create_user(session = self.test_session,
-                                       baseurl = self.baseurl,
-                                       firstname = self.unique_name,
-                                       lastname = self.unique_name,
-                                       password = user_password,
-                                       emailAddress= user_email,
+        assert user_object.create_user(session=self.test_session,
+                                       baseurl=self.baseurl,
+                                       firstname=self.unique_name,
+                                       lastname=self.unique_name,
+                                       password=user_password,
+                                       emailAddress=user_email,
                                        username=self.unique_name,
-                                       name = self.unique_name + " " + self.unique_name,
-                                       role_list = self.role_list_response), 'Incorrect response code detected when creating new user'
+                                       name=self.unique_name + " " + self.unique_name,
+                                       role_list=self.role_list_response[0]), 'Incorrect response code detected when creating new user'
 
         user_id = user_object.get_response_key('id')
         self.user_id_list.append(user_id)
 
-        assert user_object.find_user_by_id(session = self.test_session,
-                                           baseurl = self.baseurl,
-                                           user_id = user_id), 'Could not retrieve user after POST /api/rest/user'
+        assert user_object.find_user_by_id(session=self.test_session,
+                                           baseurl=self.baseurl,
+                                           user_id=user_id), 'Could not retrieve user after POST /api/rest/user'
 
         assert user_id == user_object.get_response_key('id'), 'ID of user record returned does not match response from POST'
 
@@ -131,15 +146,15 @@ class test_users():
         user_role_list = self.role_list_response
 
 
-        assert user_object.delete_user(session = self.test_session,
-                                       baseurl = self.baseurl,
-                                       user_id = self.user_id_list[0]),'Incorrect response code when attempting to delete newly created user'
+        assert user_object.delete_user(session=self.test_session,
+                                       baseurl=self.baseurl,
+                                       user_id=self.user_id_list[0]),'Incorrect response code when attempting to delete newly created user'
 
         # TODO - the delete of a user takes a little time - for reasons that are not clear to me yet...
         time.sleep(5)
-        assert not user_object.find_user_by_id(session = self.test_session,
-                                           baseurl = self.baseurl,
-                                           user_id = self.user_id_list[0]), 'Incorrect response from find user by id'
+        assert not user_object.find_user_by_id(session=self.test_session,
+                                           baseurl=self.baseurl,
+                                           user_id=self.user_id_list[0]), 'Incorrect response from find user by id'
 
         assert user_object.last_response.status_code == 400, 'Did not receive status code 400 from get call on deleted user'
 
@@ -152,9 +167,9 @@ class test_users():
 
         user_object = Users(api_version_users)
 
-        assert user_object.find_user_by_id(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    user_id = self.user_id_list[0]), 'Did not find user created in setup'
+        assert user_object.find_user_by_id(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    user_id=self.user_id_list[1]), 'Did not find user created in setup'
 
 
     @attr('smoke')
@@ -165,9 +180,9 @@ class test_users():
         """
         user_object = Users(api_version_users)
 
-        assert user_object.list_users(session = self.test_session,
-                               baseurl = self.baseurl,
-                               limit = 100), 'List users did not return correct response code'
+        assert user_object.list_users(session=self.test_session,
+                               baseurl=self.baseurl,
+                               limit=100), 'List users did not return correct response code'
 
     @attr('smoke')
     def test_find_user_property_by_name_endpoint(self):
@@ -180,20 +195,20 @@ class test_users():
 
         property_name = "gui.schedules.lastworking.frame.id"
 
-        user_object.process_user_property(session = self.test_session,
-                                          baseurl = self.baseurl,
-                                          name = property_name,
-                                          value = 'boo bah fah')
+        user_object.process_user_property(session=self.test_session,
+                                          baseurl=self.baseurl,
+                                          name=property_name,
+                                          value='boo bah fah')
 
         #Set the property for this user
-        user_object.process_user_property(session = self.test_session,
-                                          baseurl = self.baseurl,
-                                          name = property_name,
-                                          value = 'doo doo doo')
+        user_object.process_user_property(session=self.test_session,
+                                          baseurl=self.baseurl,
+                                          name=property_name,
+                                          value='doo doo doo')
 
-        assert user_object.find_user_property_by_name(session = self.test_session,
-                                               baseurl = self.baseurl,
-                                               property_name = property_name), 'Did not get 200 response code from GET /api/rest/users/userProperties/{name}'
+        assert user_object.find_user_property_by_name(session=self.test_session,
+                                               baseurl=self.baseurl,
+                                               property_name=property_name), 'Did not get 200 response code from GET /api/rest/users/userProperties/{name}'
 
         assert 'id' in user_object.last_response.json(), 'Did not find ID field in response from GET /api/rest/useres/userproperties/(name)'
         assert user_object.get_response_key('name') == 'gui.schedules.lastworking.frame.id', 'Name field in response to GET /api/rest/users/userproperties/(name) is not correct'
@@ -207,26 +222,26 @@ class test_users():
         """
         # Create a storage object with the list of ID's to update
         storage_object = Storage(api_version_storage)
-        assert storage_object.store_value(session = self.test_session,
-                                   baseurl = self.baseurl,
-                                   value= {'ids':self.user_id_list}), 'Failed to add storage value containing IDs to the server'
+        assert storage_object.store_value(session=self.test_session,
+                                   baseurl=self.baseurl,
+                                   value={'ids': self.user_id_list}), 'Failed to add storage value containing IDs to the server'
         uuid = storage_object.get_response_key('value')
 
         user_object = Users(api_version_users)
 
 
         # Multi update
-        assert user_object.update_multi_users(session = self.test_session,
-                                       baseurl = self.baseurl,
-                                       uuid = uuid,
-                                       language = 'da'),'Incorrect response code when multi-updating user language codes'
+        assert user_object.update_multi_users(session=self.test_session,
+                                       baseurl=self.baseurl,
+                                       uuid=uuid,
+                                       language='da'),'Incorrect response code when multi-updating user language codes'
 
         # Verify that the language code change took place
         for user_id in self.user_id_list:
-            user_object.find_user_by_id(session= self.test_session,
-                                        baseurl = self.baseurl,
-                                        user_id = user_id,
-                                        fields = 'languageCode')
+            user_object.find_user_by_id(session=self.test_session,
+                                        baseurl=self.baseurl,
+                                        user_id=user_id,
+                                        fields='languageCode')
             assert user_object.get_response_key('languageCode') == 'da', 'Incorrect language code detected in user after change'
 
     @attr('smoke')
@@ -236,24 +251,24 @@ class test_users():
         :return:
         """
         storage_object = Storage(api_version_storage)
-        assert storage_object.store_value(session = self.test_session,
-                                      baseurl = self.baseurl,
-                                      value= {'ids':self.user_id_list}), 'Failed to add storage value containing IDs to the server'
+        assert storage_object.store_value(session=self.test_session,
+                                      baseurl=self.baseurl,
+                                      value={'ids': self.user_id_list}), 'Failed to add storage value containing IDs to the server'
         uuid = storage_object.get_response_key('value')
 
         user_object = Users(api_version_users)
 
-        assert user_object.update_multi_users(session = self.test_session,
-                                              baseurl = self.baseurl,
-                                              uuid = uuid,
-                                              role_list = self.role_list_response[-1]),'Incorrect response code when multi-updating user role codes'
+        assert user_object.update_multi_users(session=self.test_session,
+                                              baseurl=self.baseurl,
+                                              uuid=uuid,
+                                              role_list=self.role_list_response[-1]),'Incorrect response code when multi-updating user role codes'
 
         # Verify that the language code change took place
         for user_id in self.user_id_list:
-            user_object.find_user_by_id(session= self.test_session,
-                                        baseurl = self.baseurl,
-                                        user_id = user_id,
-                                        fields = 'roles')
+            user_object.find_user_by_id(session=self.test_session,
+                                        baseurl=self.baseurl,
+                                        user_id=user_id,
+                                        fields='roles')
         assert user_object.get_response_key('roles')[0]['name'] == self.role_list_response[-1]['name'], 'Incorrect language code detected in user after change'
     @attr('smoke')
     @parameterized([
@@ -278,16 +293,16 @@ class test_users():
 
         user_object = Users(api_version_users)
 
-        assert user_object.process_user_multiple_properties(session = self.test_session,
-                                                            baseurl = self.baseurl,
-                                                            list_of_user_properties= full_property_list), 'Incorrect response code from update multiple properties'
+        assert user_object.process_user_multiple_properties(session=self.test_session,
+                                                            baseurl=self.baseurl,
+                                                            list_of_user_properties=full_property_list), 'Incorrect response code from update multiple properties'
 
         # Check to see that each key-value pair landed
 
         for index in range(len(property_name_list)):
-            assert user_object.find_user_property_by_name(session = self.test_session,
-                                                          baseurl = self.baseurl,
-                                                          property_name = property_name_list[index]), 'Incorrect response code from find property by name'
+            assert user_object.find_user_property_by_name(session=self.test_session,
+                                                          baseurl=self.baseurl,
+                                                          property_name=property_name_list[index]), 'Incorrect response code from find property by name'
             assert user_object.get_response_key('value') == property_value_list[index], 'Search on key resulted in incorrect value being returned'
 
     @attr('smoke')
@@ -297,17 +312,17 @@ class test_users():
         :return:
         """
         user_object = Users(api_version_users)
-        property_name = self.unique_name.replace(" ","_") + ".name"
-        property_value = self.unique_name.replace(" ","_") + ".value"
+        property_name = self.unique_name.replace(" ", "_") + ".name"
+        property_value = self.unique_name.replace(" ", "_") + ".value"
 
-        assert user_object.process_user_property(session = self.test_session,
-                                          baseurl = self.baseurl,
-                                          name = property_name,
-                                          value = property_value), 'Incorrect response code received from process property'
+        assert user_object.process_user_property(session=self.test_session,
+                                          baseurl=self.baseurl,
+                                          name=property_name,
+                                          value=property_value), 'Incorrect response code received from process property'
 
-        assert user_object.find_user_property_by_name(session = self.test_session,
-                                                      baseurl = self.baseurl,
-                                                      property_name = property_name), 'Incorrect response code received from find property by name'
+        assert user_object.find_user_property_by_name(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      property_name=property_name), 'Incorrect response code received from find property by name'
 
         assert user_object.get_response_key('value') == property_value, "Incorrect value returned from for property created by process single property"
 
@@ -322,19 +337,19 @@ class test_users():
 
         auth_object = Auth_api(api_version_auth)
 
-        auth_object.get_session_info(session = self.test_session,
-                                     baseurl = self.baseurl)
+        auth_object.get_session_info(session=self.test_session,
+                                     baseurl=self.baseurl)
 
         network_id = auth_object.get_response_key('network')['id']
 
         user_object = Users(api_version_users)
 
-        assert user_object.retrieve_list_of_users_by_network(session = self.test_session,
-                                                      baseurl = self.baseurl,
-                                                      network_id = network_id,
-                                                      limit = 1000,
-                                                      search = namespace,
-                                                      fields = 'name,id'), 'Incorrect response code from list users by network id'
+        assert user_object.retrieve_list_of_users_by_network(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      network_id=network_id,
+                                                      limit=1000,
+                                                      search=namespace,
+                                                      fields='name,id'), 'Incorrect response code from list users by network id'
 
         list_of_user_ids = [user['id'] for user in user_object.get_response_key('list')]
 
@@ -405,21 +420,21 @@ class test_users():
         test_user_id = self.user_id_list[0]
         if field == 'password':
             logging.info('foo bar bar')
-        user_object.find_user_by_id(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    user_id = test_user_id)
+        user_object.find_user_by_id(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    user_id=test_user_id)
 
         user_record = user_object.last_response.json()
         user_record[field] = value
 
-        assert user_object.update_user(session =self.test_session,
-                                       baseurl = self.baseurl,
-                                       identifier = test_user_id,
-                                       update_user_dict = user_record),'Did not receive 200 response code from update user'
+        assert user_object.update_user(session=self.test_session,
+                                       baseurl=self.baseurl,
+                                       identifier=test_user_id,
+                                       update_user_dict=user_record),'Did not receive 200 response code from update user'
 
-        user_object.find_user_by_id(session = self.test_session,
-                            baseurl = self.baseurl,
-                            user_id = test_user_id)
+        user_object.find_user_by_id(session=self.test_session,
+                            baseurl=self.baseurl,
+                            user_id=test_user_id)
 
         assert user_object.get_response_key(field) == value, 'New value not found after update for field = ' + field + " and value = " + str(value)
 

@@ -88,9 +88,9 @@ class Media_meta_data(framework_object):
         '''
 
         create_metadata_api_url = '/api/rest/metadata'
-        create_media_metdata_parameters = {'datatype':data_type.name,
+        create_media_metdata_parameters = {'datatype': data_type.name,
                                            'name': name,
-                                           'valueType':value_type.name}
+                                           'valueType': value_type.name}
         if pick_list != None:
             # TODO: Handle pick lists defined at creation here
             pass

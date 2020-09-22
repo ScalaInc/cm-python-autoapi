@@ -162,56 +162,57 @@ def test_endpoint_create_frameset():
     frameset_name = namespace + '_' + this_function_name()
 
     add_frameset_apiurl = '/api/rest/framesetTemplates'
-    add_frameset_parameter = {	"name": frameset_name,
-                                        "frames": [
-                                            {
-                                                "id": 17,
-                                                "name": "Main",
-                                                "color": "#ccccff",
-                                                "left": 214,
-                                                "top": 0,
-                                                "width": 1066,
-                                                "height": 640,
-                                                "zOrder": 0,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            },
-                                            {
-                                                "id": 98,
-                                                "name": "Left",
-                                                "color": "#99ccff",
-                                                "left": 0,
-                                                "top": 0,
-                                                "width": 214,
-                                                "height": 640,
-                                                "zOrder": 1,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            },
-                                            {
-                                                "id": 19,
-                                                "name": "Bottom Crawl",
-                                                "color": "#9999cc",
-                                                "left": 0,
-                                                "top": 640,
-                                                "width": 1280,
-                                                "height": 128,
-                                                "zOrder": 2,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            }
-                                        ],
-                                        "defaultSet": True,
-                                        "width": 1280,
-                                        "height": 768}
-
+    add_frameset_parameter = {"name": frameset_name}
+    #
+    # add_frameset_parameter = {	"name": frameset_name,
+    #                                     "frames": [
+    #                                         {
+    #                                             # "id": 17,
+    #                                             "name": "Main",
+    #                                             "color": "#ccccff",
+    #                                             "left": 214,
+    #                                             "top": 0,
+    #                                             "width": 1066,
+    #                                             "height": 640,
+    #                                             "zOrder": 0,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         },
+    #                                         {
+    #                                             # "id": 98,
+    #                                             "name": "Left",
+    #                                             "color": "#99ccff",
+    #                                             "left": 0,
+    #                                             "top": 0,
+    #                                             "width": 214,
+    #                                             "height": 640,
+    #                                             "zOrder": 1,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         },
+    #                                         {
+    #                                             # "id": 19,
+    #                                             "name": "Bottom Crawl",
+    #                                             "color": "#9999cc",
+    #                                             "left": 0,
+    #                                             "top": 640,
+    #                                             "width": 1280,
+    #                                             "height": 128,
+    #                                             "zOrder": 2,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         }
+    #                                     ],
+    #                                     "defaultSet": True,
+    #                                     "width": 1280,
+    #                                     "height": 768}
+    #
 
     resp = rest_request(session, type_of_call=call_type.post, baseurl = baseurl, apiurl = add_frameset_apiurl, payload_params= add_frameset_parameter)
-    logging.debug('Response from add frameset request is: status_code = {}, responce = {}'.format(resp.status_code, resp.text))
+    logging.debug('Response from add frameset request is: status_code = {}, response = {}'.format(resp.status_code, resp.text))
     assert resp.status_code == 200, 'Unexpected status code received on add frameSet request.  Expected 200, got {}'.format(resp.status_code)
     assert 'id' in resp.json().keys(), 'Did not find ID in the object created by add frameset API call'
     assert resp.json()['name'] == frameset_name, 'Name of object created by this test is not correct.  Expected {}, found {}'.format(frameset_name, resp.json()['name'])
-
     #Clean up
     delete_apiurl = add_frameset_apiurl +'/' + str(resp.json()['id'])
     resp = rest_request(session, type_of_call=call_type.delete, baseurl = baseurl, apiurl = delete_apiurl)
@@ -225,52 +226,53 @@ def test_endpoint_modify_frameset():
     Delete the newly created frameset.
     :return:
     '''
-    global session, baseurl, namespace
+    global session, baseurl, namespace, frameset_id
     frameset_name = namespace + '_' + this_function_name()
-
     add_frameset_apiurl = '/api/rest/framesetTemplates'
-    add_frameset_parameter = {	"name": frameset_name,
-                                        "frames": [
-                                            {
-                                                "id": 17,
-                                                "name": "Main",
-                                                "color": "#ccccff",
-                                                "left": 214,
-                                                "top": 0,
-                                                "width": 1066,
-                                                "height": 640,
-                                                "zOrder": 0,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            },
-                                            {
-                                                "id": 98,
-                                                "name": "Left",
-                                                "color": "#99ccff",
-                                                "left": 0,
-                                                "top": 0,
-                                                "width": 214,
-                                                "height": 640,
-                                                "zOrder": 1,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            },
-                                            {
-                                                "id": 19,
-                                                "name": "Bottom Crawl",
-                                                "color": "#9999cc",
-                                                "left": 0,
-                                                "top": 640,
-                                                "width": 1280,
-                                                "height": 128,
-                                                "zOrder": 2,
-                                                "autoscale": "FILL_EXACTLY",
-                                                "hidden": False
-                                            }
-                                        ],
-                                        "defaultSet": False,
-                                        "width": 1280,
-                                        "height": 768}
+
+    add_frameset_parameter = {"name": frameset_name}
+    # add_frameset_parameter = {	"name": frameset_name,
+    #                                     "frames": [
+    #                                         {
+    #                                             "id": 17,
+    #                                             "name": "Main",
+    #                                             "color": "#ccccff",
+    #                                             "left": 214,
+    #                                             "top": 0,
+    #                                             "width": 1066,
+    #                                             "height": 640,
+    #                                             "zOrder": 0,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         },
+    #                                         {
+    #                                             "id": 98,
+    #                                             "name": "Left",
+    #                                             "color": "#99ccff",
+    #                                             "left": 0,
+    #                                             "top": 0,
+    #                                             "width": 214,
+    #                                             "height": 640,
+    #                                             "zOrder": 1,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         },
+    #                                         {
+    #                                             "id": 19,
+    #                                             "name": "Bottom Crawl",
+    #                                             "color": "#9999cc",
+    #                                             "left": 0,
+    #                                             "top": 640,
+    #                                             "width": 1280,
+    #                                             "height": 128,
+    #                                             "zOrder": 2,
+    #                                             "autoscale": "FILL_EXACTLY",
+    #                                             "hidden": False
+    #                                         }
+    #                                     ],
+    #                                     "defaultSet": False,
+    #                                     "width": 1280,
+    #                                     "height": 768}
 
 
     resp = rest_request(session, type_of_call=call_type.post, baseurl = baseurl, apiurl = add_frameset_apiurl, payload_params= add_frameset_parameter)
@@ -284,7 +286,7 @@ def test_endpoint_modify_frameset():
     new_frame_name = 'new new new new'
     modify_frameset_parameter = {
         "id": frameset_id,
-        "name": "blahdi-blu",
+        "name": "rst01_blahdi-blu",
         "frames": [
             {
                 "id": 78,

@@ -234,7 +234,7 @@ class Media(framework_object):
         else:
             return False
 
-    def modify_media_metadata_assignment(self,session, baseurl, media_id, metadata_id, metadata_value,api_version_media_metadata):
+    def modify_media_metadata_assignment(self,session, baseurl, media_id, metadata_id, metadata_value, api_version_media_metadata):
 
         metadata_object = Media_meta_data(api_version_media_metadata)
         metadata_object.find_metadata_by_id(session = session,

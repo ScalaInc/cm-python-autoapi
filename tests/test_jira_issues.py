@@ -120,7 +120,7 @@ class test_jira_cm_8456_media():
         mmd = Media_meta_data(api_version_media_metadata)
 
         # Create Boolean Metadata
-        mm_name1 = namespace + ' boolean_metadata cm8456'
+        mm_name1 = namespace + '_boolean_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=mm_name1,
@@ -130,7 +130,7 @@ class test_jira_cm_8456_media():
         logging.info('ID of boolean metadata is: {}'.format(self.boolean_metadata_id))
 
         # Create string_any Metadata
-        self.mm_name2 = namespace + ' string_any_metadata cm8456'
+        self.mm_name2 = namespace + '_string_any_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name2,
@@ -140,7 +140,7 @@ class test_jira_cm_8456_media():
         logging.info('ID of string any metadata is: {}'.format(self.string_any_metadata_id))
 
         # Create String Picklist Metadata
-        self.mm_name3 = namespace + ' string_picklist_metadata cm8456'
+        self.mm_name3 = namespace + '_string_picklist_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name3,
@@ -159,7 +159,7 @@ class test_jira_cm_8456_media():
 
 
         # Create int Any metadata
-        self.mm_name4 = namespace + ' int_any_metadata cm8456'
+        self.mm_name4 = namespace + '_int_any_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name4,
@@ -169,7 +169,7 @@ class test_jira_cm_8456_media():
         logging.info('ID of int any metadata is: {}'.format(self.int_any_id))
 
         # Create int Picklist metadata
-        self.mm_name5 = namespace + ' int_picklist_metadata cm8456'
+        self.mm_name5 = namespace + '_int_picklist_metadata_cm8456'
         mmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name5,
@@ -504,7 +504,7 @@ class test_jira_cm_8456_player():
         pmd = Player_meta_data(api_version_player_metadata)
 
         # Create Boolean Metadata
-        mm_name1 = namespace + ' boolean_metadata cm8456'
+        mm_name1 = namespace + '_boolean_metadata_cm8456'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=mm_name1,
@@ -514,7 +514,7 @@ class test_jira_cm_8456_player():
         logging.info('ID of boolean metadata is: {}'.format(self.boolean_metadata_id))
 
         # Create string_any Metadata
-        self.mm_name2 = namespace + ' string_any_metadata cm8456'
+        self.mm_name2 = namespace + '_string_any_metadata_cm8456'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name2,
@@ -524,7 +524,7 @@ class test_jira_cm_8456_player():
         logging.info('ID of string any metadata is: {}'.format(self.string_any_metadata_id))
 
         # Create String Picklist Metadata
-        self.mm_name3 = namespace + ' string_picklist_metadata cm8456'
+        self.mm_name3 = namespace + '_string_picklist_metadata_cm8456'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name3,
@@ -543,7 +543,7 @@ class test_jira_cm_8456_player():
 
 
         # Create int Any metadata
-        self.mm_name4 = namespace + ' int_any_metadata cm8456'
+        self.mm_name4 = namespace + '_int_any_metadata_cm8456'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name4,
@@ -553,7 +553,7 @@ class test_jira_cm_8456_player():
         logging.info('ID of int any metadata is: {}'.format(self.int_any_id))
 
         # Create int Picklist metadata
-        self.mm_name5 = namespace + ' int_picklist_metadata cm8456'
+        self.mm_name5 = namespace + '_int_picklist_metadata_cm8456'
         pmd.create_metadata(self.test_session,
                             baseurl=self.baseurl,
                             name=self.mm_name5,
@@ -576,7 +576,7 @@ class test_jira_cm_8456_player():
 
         player_object.create_multiple_players(session=self.test_session,
                                               baseurl=self.baseurl,
-                                              name="Player # 8456 " + namespace,
+                                              name="Player_#_8456_" + namespace,
                                               start_at_player_number=1,
                                               number_of_players=5)
 
@@ -587,7 +587,7 @@ class test_jira_cm_8456_player():
         logging.debug('player_id_list is = {}'.format(self.player_id_list))
 
     def get_player_name(self, player_number):
-        return "Player " + str(player_number) + " 8456 " + namespace
+        return "Player_" + str(player_number) + "_8456_" + namespace
 
 
     def teardown(self):

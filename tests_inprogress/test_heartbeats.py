@@ -64,7 +64,7 @@ def t_teardown():
     response = logout(session, config['login']['baseurl'])
     assert response
 
-
+@nottest
 @with_setup(t_setup, t_teardown)
 def test_initial_get_heartbeat_sequence():
     '''
@@ -89,7 +89,7 @@ def test_initial_get_heartbeat_sequence():
     logging.info('Current sequence number is: {}'.format(sequence))
     assert sequence == 0, 'Sequence number not 0.  Sequence number is {}'.format(sequence)
 
-
+@nottest
 @with_setup(t_setup, t_teardown)
 def test_report_heartbeat():
     '''

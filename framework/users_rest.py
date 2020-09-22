@@ -185,6 +185,8 @@ class Users(framework_object):
         'username': username
         }
 
+        logging.debug("create_user: payload_params/user_parameters: {}".format(user_parameters))
+
         self.last_response = rest_request(session,type_of_call=call_type.post, baseurl = baseurl,  apiurl= create_user_apiurl, payload_params=user_parameters)
 
         logging.debug("Made call to POST {}.  Response code = {}, Response = {}".format(create_user_apiurl,

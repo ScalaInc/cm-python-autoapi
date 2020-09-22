@@ -121,10 +121,11 @@ def test_endpoint_file_upload_file():
 
     # Delete media item to clean up
     delete_apiurl = '/api/rest/media/' + str(media_id)
-    resp = rest_request(session,type_of_call=call_type.delete, baseurl = baseurl, apiurl = delete_apiurl)
+    resp = rest_request(session, type_of_call=call_type.delete, baseurl=baseurl, apiurl=delete_apiurl)
     logging.info('Response  from delete call is: is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 204, 'Received incorrect response code during media delete call.'
 
+@nottest
 @with_setup(t_setup,t_teardown)
 def test_endpoint_file_upload_single_file():
     '''
@@ -139,11 +140,11 @@ def test_endpoint_file_upload_single_file():
 
     global session, baseurl, config
     current_time_since_epoch = time.time()
-    local_file_name = config['media_items']['mediafile_1']
+    local_file_name = config['media_items']['mediafile_2']
     file_upload_path = config['path']['media']
 
     # Build JSON parameters for file upload in
-    file_upload_parameter_list = {'filename':local_file_name,'filepath':file_upload_path,'uploadType':'media_item'}
+    file_upload_parameter_list = {'filename': local_file_name, 'filepath': file_upload_path, 'uploadType': 'media_item'}
 
     # Begin Media upload.   Start with Init call
     resp = rest_request(session, call_type.post, baseurl=config['login']['baseurl'], apiurl='/api/rest/fileupload/init',
@@ -158,12 +159,13 @@ def test_endpoint_file_upload_single_file():
     logging.debug('filename from Init call is: {}'.format(json_init_response['filename']))
 
     # Prep the arguments for the put call
-    file = open(config['path']['media'] + local_file_name,'rb')
+    file = open(config['path']['media'] + local_file_name, 'rb')
     file_upload_put_apiurl = '/api/rest/fileupload/part/'+json_init_response['uuid'] + '/0'
 
+
     #Send the put request to upload the file
-    resp = rest_request(session,call_type.post,baseurl = config['login']['baseurl'], apiurl=file_upload_put_apiurl, file_object = file)
-    logging.info('Response from file post call is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
+    resp = rest_request(session, call_type.post, baseurl=config['login']['baseurl'], apiurl=file_upload_put_apiurl, file_object=file)
+    logging.info('Response from file post call is: status_code =  {}, response = {}'.format(resp.status_code, resp.text))
     file.close()
     assert resp.status_code == 204, 'Received incorrect response code after file put call on media upload'
 
