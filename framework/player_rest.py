@@ -28,7 +28,7 @@ class Player(framework_object):
                       name,
                       description=None,
                       type="SCALA",
-                      distribution_server_id=1041
+                      distribution_server_id=1053
                       ):
         
         '''
@@ -64,7 +64,7 @@ class Player(framework_object):
                                 type = 'SCALA',
                                 start_at_player_number=1,
                                 number_of_players=1,
-                                distribution_server_id=1041
+                                distribution_server_id=1053
                                 ):
         '''
         One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
