@@ -60,7 +60,7 @@ class http_media_cm():
         # Attributes requiring special handling
 
         # Completed validation and special handling of attributes requiring
-        #it.  Update internal user_data field
+        # it.  Update internal user_data field
         logging.debug('about to add the following attribute to the system: ' + str(attribute))
         self.user_data = dict(chain(self.user_data.items(), attribute.items()))
         logging.debug('user data is now: ' + json.dumps(self.user_data))
@@ -102,12 +102,12 @@ class Media(framework_object):
         '''
 
         create_media_apiurl = '/api/rest/media'
-        payload_params = {'name':name, 'uri': uri, 'mediaType':media_type}
+        payload_params = {'name': name, 'uri': uri, 'mediaType': media_type}
 
         self.last_response = rest_request(session,
                                           type_of_call=call_type.post,
-                                          baseurl = baseurl,
-                                          apiurl = create_media_apiurl,
+                                          baseurl=baseurl,
+                                          apiurl=create_media_apiurl,
                                           payload_params=payload_params
                                           )
         logging.debug('Sent call to POST {}.  Response code = {}.  Response = {}'.format(create_media_apiurl,
@@ -136,13 +136,13 @@ class Media(framework_object):
             list_media_apiurl = '/api/rest/media'
             return self.list_objects(session,
                                      baseurl,
-                                     apiurl = list_media_apiurl,
-                                     limit = limit,
-                                     offset = offset,
-                                     sort = sort,
-                                     filters = filters,
-                                     fields = fields,
-                                     search = search)
+                                     apiurl=list_media_apiurl,
+                                     limit=limit,
+                                     offset=offset,
+                                     sort=sort,
+                                     filters=filters,
+                                     fields=fields,
+                                     search=search)
 
     def find_media_by_id(self, session, baseurl, id, fields = None):
         '''
@@ -194,10 +194,10 @@ class Media(framework_object):
         '''
         get_thumbnail_apiurl = '/api/rest/media/thumbnailStatus/' + str(media_id)
 
-        self.last_response = rest_request(session = session,
-                                          baseurl = baseurl,
-                                          apiurl = get_thumbnail_apiurl,
-                                          type_of_call = call_type.get)
+        self.last_response = rest_request(session=session,
+                                          baseurl=baseurl,
+                                          apiurl=get_thumbnail_apiurl,
+                                          type_of_call=call_type.get)
 
         logging.debug('Made call to GET {}.  Response code = {}.  Response = {}'.format(get_thumbnail_apiurl,
                                                                                         self.last_response.status_code,
@@ -208,7 +208,7 @@ class Media(framework_object):
         else:
             return False
 
-    def update_single_media(self, session, baseurl, media_id, field_change_dict = None):
+    def update_single_media(self, session, baseurl, media_id, field_change_dict=None):
         '''
         Implements PUT /api/rest/media/{id}
         Parameters to change is a dictonary of key
@@ -221,10 +221,10 @@ class Media(framework_object):
 
         update_media_apiurl = '/api/rest/media/' + str(media_id)
 
-        self.last_response = rest_request(session = session,
-                                          baseurl = baseurl,
-                                          apiurl = update_media_apiurl,
-                                          type_of_call = call_type.put,
+        self.last_response = rest_request(session=session,
+                                          baseurl=baseurl,
+                                          apiurl=update_media_apiurl,
+                                          type_of_call=call_type.put,
                                           payload_params=field_change_dict)
         logging.debug('Made call to PUT {}.  Response status code = {}, response = {}'.format(update_media_apiurl,
                                                                                               self.last_response.status_code,
@@ -237,9 +237,9 @@ class Media(framework_object):
     def modify_media_metadata_assignment(self,session, baseurl, media_id, metadata_id, metadata_value, api_version_media_metadata):
 
         metadata_object = Media_meta_data(api_version_media_metadata)
-        metadata_object.find_metadata_by_id(session = session,
-                                            baseurl = baseurl,
-                                            metadata_id = metadata_id)#, 'Could not find boolean metadata with ID =' + str(metadata_id)
+        metadata_object.find_metadata_by_id(session=session,
+                                            baseurl=baseurl,
+                                            metadata_id=metadata_id)#, 'Could not find boolean metadata with ID =' + str(metadata_id)
         # Ugly bit where I pull down the metadata object from the CM and modify it so it can be
         # Changed on the media object - the field 'order' must be removed
         metadata_json = metadata_object.get_last_response().json()
@@ -259,10 +259,10 @@ class Media(framework_object):
         changed_metadata_definition = {'metadataValue':[{'value':value_placeholder,'metadata':metadata_json}]}
         logging.debug('Determined {}'.format(json.dumps(changed_metadata_definition)))
 
-        return self.update_single_media(session = session,
-                                         baseurl = baseurl,
-                                         media_id = media_id,
-                                         field_change_dict = changed_metadata_definition), 'Failed to update the media with the new metadata value: {}'.format(self.last_response.text)
+        return self.update_single_media(session=session,
+                                         baseurl=baseurl,
+                                         media_id=media_id,
+                                         field_change_dict=changed_metadata_definition), 'Failed to update the media with the new metadata value: {}'.format(self.last_response.text)
 
     def wait_for_media_upload(self, session, baseurl, max_wait_seconds, media_id):
         '''
@@ -279,9 +279,9 @@ class Media(framework_object):
         media_object = Media(self.api_version)
 
         for current_wait in range(max_wait_seconds):
-            media_object.get_thumbnail_status_by_id(session = session,
-                                           baseurl = baseurl,
-                                           media_id = media_id)
+            media_object.get_thumbnail_status_by_id(session=session,
+                                           baseurl=baseurl,
+                                           media_id=media_id)
             if media_object.last_response.json()['value'] == 'Done':
                 return True
             logging.debug('loop number {} through wait for media upload'.format(current_wait))

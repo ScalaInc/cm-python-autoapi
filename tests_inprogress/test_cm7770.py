@@ -56,11 +56,11 @@ class test_():
         :return:
         """
         report_object = Reports(api_version_reports)
-        report_object.create_report(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    name = "XML report name",
+        report_object.create_report(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    name="XML report name",
                                     description="XML report for the ad folks",
-                                    periodStart = '2015-01-20',
+                                    periodStart='2015-01-20',
                                     periodEnd='2015-01-23',
                                     templateFiliename='XML_SUMMARY')
 
