@@ -69,7 +69,7 @@ class test_cm_9707():
 
         # Set up unique string associated with this test for naming objects
         now = datetime.datetime.now()
-        self.unique_name = namespace + " " +now.strftime("%Y_%m_%d_%H%S.%f")
+        self.unique_name = namespace + "_" +now.strftime("%Y_%m_%d_%H%S.%f")
 
         # Upload media for this test case - some of each type - use a new directory for each item
 
@@ -140,7 +140,7 @@ class test_cm_9707():
         category_obj.create_category(session = self.test_session,
                                      baseurl = self.baseurl,
                                      description = self.unique_name,
-                                     name = self.unique_name + "c1",
+                                     name = self.unique_name + "_c1",
                                      )
 
         self.category_id_list.append(category_obj.get_response_key('id'))
@@ -148,7 +148,7 @@ class test_cm_9707():
         category_obj.create_category(session = self.test_session,
                                      baseurl = self.baseurl,
                                      description = self.unique_name,
-                                     name = self.unique_name + "c2",
+                                     name = self.unique_name + "_c2",
                                      )
 
         self.category_id_list.append(category_obj.get_response_key('id'))
@@ -158,22 +158,22 @@ class test_cm_9707():
         workgroup_object = Workgroup(api_version_workgroups)
         workgroup_object.create_workgroup(session = self.test_session,
                                           baseurl = self.baseurl,
-                                          name = self.unique_name + "w1")
+                                          name = self.unique_name + "_w1")
 
         self.workgroup_id_list.append(workgroup_object.get_response_key('id'))
 
 
         workgroup_object.create_workgroup(session = self.test_session,
                                           baseurl = self.baseurl,
-                                          name = self.unique_name + "w2")
+                                          name = self.unique_name + "_w2")
 
         self.workgroup_id_list.append(workgroup_object.get_response_key('id'))
 
         # Create two playlists for this test - one playlist and one subplaylist
         playlist_object = Playlist(api_version_playlist)
         self.playlist_id_list = []
-        playlist_name_1 = self.unique_name + " playlist 1"
-        playlist_name_2 = self.unique_name + " playlist 2"
+        playlist_name_1 = self.unique_name + "_playlist_1"
+        playlist_name_2 = self.unique_name + "_playlist_2"
 
         playlist_object.create_playlist(session = self.test_session,
                                         baseurl = self.baseurl,
@@ -454,7 +454,7 @@ class test_cm_9703():
 
         # Set up unique string associated with this test for naming objects
         now = datetime.datetime.now()
-        self.unique_name = namespace + " " +now.strftime("%Y_%m_%d_%H%S.%f")
+        self.unique_name = namespace + "_" +now.strftime("%Y_%m_%d_%H%S.%f")
 
         # Upload media for this test case - some of each type - use a new directory for each item
 
@@ -506,8 +506,8 @@ class test_cm_9703():
         # Create two playlists for this test - one playlist and one subplaylist
         playlist_object = Playlist(api_version_playlist)
         self.playlist_id_list = []
-        playlist_name_1 = self.unique_name + " playlist 1"
-        playlist_name_2 = self.unique_name + " playlist 2"
+        playlist_name_1 = self.unique_name + "_playlist_1"
+        playlist_name_2 = self.unique_name + "_playlist_2"
 
         playlist_object.create_playlist(session = self.test_session,
                                         baseurl = self.baseurl,
@@ -530,13 +530,13 @@ class test_cm_9703():
 
         player_group_obj.create_player_group(session = self.test_session,
                                              baseurl = self.baseurl,
-                                             name = self.unique_name + " pg1")
+                                             name = self.unique_name + "_pg1")
 
         self.player_group_id_list.append(player_group_obj.get_response_key('id'))
 
         player_group_obj.create_player_group(session = self.test_session,
                                              baseurl = self.baseurl,
-                                             name = self.unique_name + " pg2")
+                                             name = self.unique_name + "_pg2")
 
         self.player_group_id_list.append(player_group_obj.get_response_key('id'))
 
@@ -546,7 +546,7 @@ class test_cm_9703():
 
         player_obj.create_player(session = self.test_session,
                                  baseurl = self.baseurl,
-                                 name = self.unique_name + " p1")
+                                 name = self.unique_name + "_p1")
         self.player_id_list.append(player_obj.get_response_key('id'))
 
         # # Fill the playlists
@@ -854,7 +854,7 @@ class test_dot2dot_cm_9704():
 
         # Set up unique string associated with this test for naming objects
         now = datetime.datetime.now()
-        self.unique_name = namespace + " " +now.strftime("%Y_%m_%d_%H%S.%f")
+        self.unique_name = namespace + "_" +now.strftime("%Y_%m_%d_%H%S.%f")
 
         # Upload media for this test case - some of each type - use a new directory for each item
 
@@ -889,8 +889,8 @@ class test_dot2dot_cm_9704():
         # Create two playlists for this test - one playlist and one subplaylist
         playlist_object = Playlist(api_version_playlist)
         self.playlist_id_list = []
-        playlist_name_1 = self.unique_name + " playlist 1"
-        playlist_name_2 = self.unique_name + " playlist 2"
+        playlist_name_1 = self.unique_name + "_playlist_1"
+        playlist_name_2 = self.unique_name + "_playlist_2"
 
         playlist_object.create_playlist(session = self.test_session,
                                         baseurl = self.baseurl,

@@ -69,7 +69,7 @@ class test_cm_9707():
 
         # Set up unique string associated with this test for naming objects
         now = datetime.datetime.now()
-        self.unique_name = namespace + " " +now.strftime("%Y_%m_%d_%H%S.%f")
+        self.unique_name = namespace + "_" + now.strftime("%Y_%m_%d_%H%S.%f")
 
         # Upload media for this test case - some of each type - use a new directory for each item
         # Upload 3 media items
@@ -104,12 +104,12 @@ class test_cm_9707():
         # Create a playlists for this test
         playlist_object = Playlist(api_version_playlist)
         self.playlist_id_list = []
-        playlist_name_1 = self.unique_name + " playlist 1"
+        playlist_name_1 = self.unique_name + "_playlist_1"
 
-        playlist_object.create_playlist(session = self.test_session,
-                                        baseurl = self.baseurl,
-                                        name = playlist_name_1,
-                                        description = self.unique_name,
+        playlist_object.create_playlist(session=self.test_session,
+                                        baseurl=self.baseurl,
+                                        name=playlist_name_1,
+                                        description=self.unique_name,
                                         )
 
         self.playlist_id_list.append(playlist_object.get_response_key("id"))
@@ -118,11 +118,11 @@ class test_cm_9707():
 
         # Fill the playlists
         for media in self.media_id_list:
-            playlist_object.add_media_to_normal_playlist(session = self.test_session,
-                                                     baseurl = self.baseurl,
-                                                     playlist_id = self.playlist_id_list[0],
-                                                     media_id = media)
-            logging.debug("Added media with id  = {} to playlist with id = {}".format(media,self.playlist_id_list[0]))
+            playlist_object.add_media_to_normal_playlist(session=self.test_session,
+                                                     baseurl=self.baseurl,
+                                                     playlist_id=self.playlist_id_list[0],
+                                                     media_id=media)
+            logging.debug("Added media with id  = {} to playlist with id = {}".format(media, self.playlist_id_list[0]))
 
 
 
@@ -176,22 +176,22 @@ class test_cm_9707():
 
     def test_cm_9964(self):
         playlist_name_counter = 0
-        playlist_name = self.unique_name + " playlist " + str(playlist_name_counter)
+        playlist_name = self.unique_name + "_playlist_" + str(playlist_name_counter)
         playlist_object = Playlist(api_version_playlist)
         playlist_id_list=[]
 
         # Create first playlist
-        playlist_object.create_playlist(session = self.test_session,
-                                    baseurl = self.baseurl,
-                                    name = playlist_name,
-                                    description = self.unique_name,
+        playlist_object.create_playlist(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    name=playlist_name,
+                                    description=self.unique_name,
                                     )
         playlist_id_list.append(playlist_object.get_id())
 
-        playlist_object.create_playlist(session = self.test_session,
-                                        baseurl = self.baseurl,
-                                        name = playlist_name,
-                                        description = self.unique_name,
+        playlist_object.create_playlist(session=self.test_session,
+                                        baseurl=self.baseurl,
+                                        name=playlist_name,
+                                        description=self.unique_name,
                                         )
 
         playlist_id_list.append(playlist_object.get_id())
