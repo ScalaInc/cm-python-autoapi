@@ -17,6 +17,7 @@ from framework.roles_rest import Roles
 
 import inspect
 import time
+import os
 
 print(CONFIG_FILE_PATH)
 config = configparser.ConfigParser()
@@ -46,7 +47,7 @@ def t_setup():
 
     # Begin by initiating a new login session for this test case.
     global config, session, media_id_list, user_id_list, baseurl, number_of_cases_run, namespace, unique_name, \
-        user_object, api_version_users, api_version_roles
+        user_object, api_version_users, api_version_roles, api_version
     logging.info('Beginning test setup')
     baseurl = config['login']['baseurl']
     username = config['login']['username']
@@ -102,7 +103,7 @@ def t_teardown(upload_media=False):
     response = logout(session, config['login']['baseurl'])
     assert response
 
-@with_setup(setup=t_setup)
+@with_setup(setup=t_setup, teardown=t_teardown)
 def test_login_new_user():
     global session, user_id_list, user_name, user_password, baseurl, unique_name
     user_name = unique_name + "_setup_setup" + str(1)
@@ -114,14 +115,57 @@ def test_login_new_user():
 
     logging.info("Successfully logged in with user_name {}".format(user_name))
 
-# @with_setup(t_setup, t_teardown)
+@with_setup(t_setup)
 def test_upload_1000_media():
-    global session, user_id_list, user_name, user_password, baseurl, unique_name
+    global session, user_id_list, user_name, user_password, baseurl, unique_name, media_id_list,\
+        unique_name
+
+    assert session is not None, "unable to login with user_name {} and password {}".format(user_name, user_password)
+
+    media_path = config['path']['media']
+    upload_media_list = []
     # need to create a list of media objects to load
     # need to upload the objects
-    pass
+    media_list = os.listdir(media_path)
+    logging.debug(len(media_list))
+    for filename in media_list:
+        # logging.debug(filename)
+        if filename.find('.jpg') or filename.find('png'):
+            upload_media_list.append(filename)
+    logging.debug(upload_media_list)
+    logging.debug(len(upload_media_list))
+    api_version_fileupload = config['api_info']['api_version_fileupload']
+    api_version = config['api_info']['api_version']
 
-@nottest
+    media_object = Media(api_version)
+    file_up = File_upload(api_version_fileupload)
+    for i in range(1000):
+        local_file_name = media_list[i]
+        # initiate Upload of media item
+        assert file_up.initiate_upload(session=session,
+                                       baseurl=baseurl,
+                                       local_file_name=local_file_name,
+                                       file_upload_path=media_path)
+        uuid = file_up.get_response_key('uuid')
+        media_id = file_up.get_response_key('mediaId')
+        media_id_list.append(media_id)
+        # Upload file part
+        assert file_up.upload_file_part(session=session, baseurl=baseurl,
+                                       local_file_name=local_file_name,
+                                       local_file_path=media_path,
+                                       uuid=uuid)
+        # Commit Upload
+        assert file_up.upload_finished(session=session,
+                                       baseurl=baseurl,
+                                       uuid=uuid)
+        # Wait for upload to finish
+        assert media_object.wait_for_media_upload(session=session,
+                                                  baseurl=baseurl,
+                                                  max_wait_seconds=20,
+                                                  media_id=media_id)
+
+    logging.debug('media_id_list is = {}'.format(media_id_list))
+
 @with_setup(teardown=t_teardown)
 def test_delete_1000_media():
     '''
@@ -129,7 +173,7 @@ def test_delete_1000_media():
     :return:
     '''
 
-    global baseurl, session, api_version
+    global baseurl, session, api_version, media_id_list
     # Get a list of media items by ID
     media_object = Media(api_version)
     assert media_object.list_media(session, baseurl, limit=1000, fields='id')
