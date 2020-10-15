@@ -102,7 +102,7 @@ def test_report_heartbeat():
 
     # Get UUID of player under test
     player = Player(api_version)
-    player.find_player_by_id(session,baseurl = baseurl, player_id =player_id)
+    player.find_player_by_id(session, baseurl=baseurl, player_id=player_id)
     logging.debug('Current Player in use for this test case is: {}'.format(player.last_response.text))
     uuid = player.get_response_key('uuid')
 
@@ -113,7 +113,7 @@ def test_report_heartbeat():
     # Send the heartbeat message to the player under test
     heartbeat_controller = Heartbeats(api_version)
 
-    assert heartbeat_controller.report_heartbeat(session, baseurl = baseurl, uuid = uuid, events = [heartbeat.get_json_data()] ), 'Incorrect response code from report heartbeat message.'
+    assert heartbeat_controller.report_heartbeat(session, baseurl=baseurl, uuid=uuid, events=[heartbeat.get_json_data()] ), 'Incorrect response code from report heartbeat message.'
 
     #Verify that the heartbeat message got added to the player under test
 
