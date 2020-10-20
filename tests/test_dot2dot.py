@@ -1,6 +1,7 @@
 __author__ = 'rkaye'
 
 from framework.languages_rest import Languages
+from nose import with_setup
 import logging
 import logging.config
 import configparser
@@ -244,41 +245,41 @@ class test_cm_9707():
 
     def teardown(self):
 
-        # # Delete playlists used in testing
-        # playlist_object = Playlist(api_version_playlist)
-        #
-        # for playlist in self.playlist_id_list:
-        #     result = playlist_object.delete_playlist_by_id(session = self.test_session,
-        #                                                    baseurl = self.baseurl,
-        #                                                    playlist_id = playlist )
-        #     logging.debug("Deleted Playlist with ID = {} result = {}".format(playlist, result))
-        #
-        # # Delete workgroups
-        #
-        # workgroup_object = Workgroup(api_version_workgroups)
-        #
-        # for workgroup in self.workgroup_id_list:
-        #     result = workgroup_object.delete_workgroup(session = self.test_session,
-        #                                                baseurl = self.baseurl,
-        #                                                workgroup_id = workgroup)
-        #     logging.debug("Deleted workgroup with ID = {}  result = {}".format(workgroup, result))
-        #
-        # # Delete Categories
-        # category_object = Category(api_version_category)
-        #
-        # for category in self.category_id_list:
-        #     result = category_object.delete_category_by_id(session = self.test_session,
-        #                                                    baseurl = self.baseurl,
-        #                                                    category_id = category)
-        #     logging.debug("Deleted category with ID = {}  result = {}".format(category, result))
+        # Delete playlists used in testing
+        playlist_object = Playlist(api_version_playlist)
 
-        # # Delete media and messages and templates
-        # media_object = Media(api_version_media)
-        # for media in self.media_id_list: #+ self.message_id_list + self.template_id_list:
-        #     result = media_object.delete_media_by_id(session = self.test_session,
-        #                                              baseurl = self.baseurl,
-        #                                              id = media)
-        #     logging.debug("Deleted Media with id = {} result = {}".format(media,result))
+        for playlist in self.playlist_id_list:
+            result = playlist_object.delete_playlist_by_id(session = self.test_session,
+                                                           baseurl = self.baseurl,
+                                                           playlist_id = playlist )
+            logging.debug("Deleted Playlist with ID = {} result = {}".format(playlist, result))
+
+        # Delete workgroups
+
+        workgroup_object = Workgroup(api_version_workgroups)
+
+        for workgroup in self.workgroup_id_list:
+            result = workgroup_object.delete_workgroup(session = self.test_session,
+                                                       baseurl = self.baseurl,
+                                                       workgroup_id = workgroup)
+            logging.debug("Deleted workgroup with ID = {}  result = {}".format(workgroup, result))
+
+        # Delete Categories
+        category_object = Category(api_version_category)
+
+        for category in self.category_id_list:
+            result = category_object.delete_category_by_id(session = self.test_session,
+                                                           baseurl = self.baseurl,
+                                                           category_id = category)
+            logging.debug("Deleted category with ID = {}  result = {}".format(category, result))
+
+        # Delete media and messages and templates
+        media_object = Media(api_version_media)
+        for media in self.media_id_list: #+ self.message_id_list + self.template_id_list:
+            result = media_object.delete_media_by_id(session = self.test_session,
+                                                     baseurl = self.baseurl,
+                                                     id = media)
+            logging.debug("Deleted Media with id = {} result = {}".format(media,result))
 
         self.api_auth_object.logout()
 
@@ -606,7 +607,7 @@ class test_cm_9703():
         #                                                    baseurl = self.baseurl,
         #                                                    category_id = category)
         #     logging.debug("Deleted category with ID = {}  result = {}".format(category, result))
-
+        #
         # # Delete media and messages and templates
         # media_object = Media(api_version_media)
         # for media in self.media_id_list: #+ self.message_id_list + self.template_id_list:
@@ -835,6 +836,11 @@ class test_dot2dot_cm_9704():
     Test fixture to validate CM-9704 -
     DELETE /api/rest/playlists/{id}/playlistItems/{playlistItemId}
     """
+    def fake_setup(self):
+        pass
+
+    def fake_teardown(self):
+        pass
 
     def setup(self):
         # Login to perform teardown
@@ -936,7 +942,8 @@ class test_dot2dot_cm_9704():
     def teardown(self):
         self.api_auth_object.logout()
 
-    def test_delete_subplaylist(self):
+    @with_setup(setup=setup, teardown=fake_teardown)
+    def test_01_delete_subplaylist(self):
         """
         Delete the subplaylist from the master playlist
         :return:
@@ -969,8 +976,8 @@ class test_dot2dot_cm_9704():
             else:
                 logging.debug("Item is not a playlist playlist item id = {}".format(item['id']))
 
-
-    def test_delete_media(self):
+    @with_setup(setup=fake_setup, teardown=fake_teardown)
+    def test_02_delete_media(self):
         """
         Test that the playlist media items are correctly deleted
         :return:
@@ -1002,5 +1009,120 @@ class test_dot2dot_cm_9704():
                 assert playlist_obj.get_response_key('itemCount') == len(playlist_items['list']) - num_deleted,"Expected " + str(len(playlist_items['list']) - num_deleted) + " items in playlist, but found " + playlist_obj.get_response_key('itemCount')
             else:
                 logging.debug("Item is not a playlist playlist item id = {}".format(item['id']))
+
+    @with_setup(setup=fake_setup, teardown=fake_teardown)
+    def test_03_delete_playlists(self):
+        playlist_obj = Playlist(api_version_playlist)
+        playlist_obj.list_playlists(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    limit=1000,
+                                    sort='name')
+        playlists = playlist_obj.get_response_key('list')
+        # logging.debug(playlists)
+        logging.debug(len(playlists))
+        for playlist in playlists:
+            playlist_id = playlist['id']
+            logging.debug("deleting playlist by id: {}".format(playlist_id))
+            assert playlist_obj.delete_playlist_by_id(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      playlist_id=playlist_id),\
+                "Failed to delete playlist {} with id {}".format(playlist['name'], playlist['id'])
+
+    @with_setup(setup=fake_setup, teardown=fake_teardown)
+    def test_04_delete_remaining_media(self):
+        playlist_obj = Playlist(api_version_playlist)
+        playlist_obj.list_playlists(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    limit=1000,
+                                    sort='name')
+        playlists = playlist_obj.get_response_key('list')
+        # logging.debug(playlists)
+        logging.debug(len(playlists))
+        for playlist in playlists:
+            playlist_id = playlist['id']
+            logging.debug("deleting playlist by id: {}".format(playlist_id))
+            assert playlist_obj.delete_playlist_by_id(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      playlist_id=playlist_id),\
+                "Failed to delete playlist {} with id {}".format(playlist['name'], playlist['id'])
+        media_obj = Media(api_version_media)
+        media_obj.list_media(session=self.test_session,
+                             baseurl=self.baseurl,
+                             limit=1000,
+                             sort='name')
+
+        media_list = media_obj.get_response_key('list')
+        logging.debug(media_list)
+        logging.debug(len(media_list))
+        for media in media_list:
+            media_id = media['id']
+            assert media_obj.delete_media_by_id(session=self.test_session,
+                                                baseurl=self.baseurl,
+                                                id=media_id),\
+                "Failed to delete media item {} with id {}".format(media['name'], media['id'])
+
+    @with_setup(setup=fake_setup, teardown=fake_teardown)
+    def test_05_delete_players(self):
+        player_obj = Player(api_version_player)
+        player_obj.list_players(session=self.test_session,
+                                baseurl=self.baseurl,
+                                limit=1000)
+        player_list = player_obj.get_response_key('list')
+        logging.debug(player_list)
+        logging.debug(len(player_list))
+        for player in player_list:
+            player_id = player['id']
+            if player['name'].startswith('tst'):
+                assert player_obj.delete_player_by_id(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      id=player_id),\
+                    "Failed to delete player {} with id {}".format(player['name'],player['id'])
+
+    @with_setup(setup=fake_setup, teardown=fake_teardown)
+    def test_06_delete_player_groups(self):
+        player_group_obj = PlayerGroup(api_version_player_group)
+        player_group_obj.list_player_groups(session=self.test_session,
+                                            baseurl=self.baseurl,
+                                            limit=1000)
+        player_group_list = player_group_obj.get_response_key('list')
+        logging.debug(player_group_list)
+        logging.debug(len(player_group_list))
+        for player_group in player_group_list:
+            player_group_id = player_group['id']
+            assert player_group_obj.delete_player_group_by_id(session=self.test_session,
+                                                              baseurl=self.baseurl,
+                                                              player_group_id=player_group_id),\
+                "Failed to delete player {} with id {}".format(player_group['name'],
+                                                               player_group['id'])
+        playlist_obj = Playlist(api_version_playlist)
+        playlist_obj.list_playlists(session=self.test_session,
+                                    baseurl=self.baseurl,
+                                    limit=1000,
+                                    sort='name')
+        playlists = playlist_obj.get_response_key('list')
+        # logging.debug(playlists)
+        logging.debug(len(playlists))
+        for playlist in playlists:
+            playlist_id = playlist['id']
+            logging.debug("deleting playlist by id: {}".format(playlist_id))
+            assert playlist_obj.delete_playlist_by_id(session=self.test_session,
+                                                      baseurl=self.baseurl,
+                                                      playlist_id=playlist_id),\
+                "Failed to delete playlist {} with id {}".format(playlist['name'], playlist['id'])
+        media_obj = Media(api_version_media)
+        media_obj.list_media(session=self.test_session,
+                             baseurl=self.baseurl,
+                             limit=1000,
+                             sort='name')
+
+        media_list = media_obj.get_response_key('list')
+        logging.debug(media_list)
+        logging.debug(len(media_list))
+        for media in media_list:
+            media_id = media['id']
+            assert media_obj.delete_media_by_id(session=self.test_session,
+                                                baseurl=self.baseurl,
+                                                id=media_id),\
+                "Failed to delete media item {} with id {}".format(media['name'], media['id'])
 
 

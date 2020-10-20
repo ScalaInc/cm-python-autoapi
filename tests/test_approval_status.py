@@ -49,6 +49,7 @@ def t_setup():
     assert session is not None
     media_id_list = []
     user_id_list = []
+    message_id_list = []
 
     approval_status_username = namespace + '_approvalStatus_' + str(number_of_cases_run)
     approval_status_password = 'approvalStatusPassword'
@@ -118,6 +119,13 @@ def t_setup():
     approve_media_apiurl = '/api/rest/media/' + str(media_id_list[0])
     resp = rest_request(session_not_admin, type_of_call=call_type.put, baseurl=baseurl, apiurl=approve_media_apiurl,
                         payload_params=approval_parameters)
+    # Upload a template
+    # TODO: need to write the routine to upload a template and get the template id
+
+    # Upload a message to the template
+    # TODO: need to write the routine to upload a message and assign it to a template
+    # TODO: and get the message id and add it to the message_id_list
+
 
     number_of_cases_run += 1
 
@@ -153,6 +161,12 @@ def t_teardown():
     if resp.status_code != 204:
         logging.debug("Media may have not been deleted at end of this test case.")
 
+    # Delete the template created for this test
+    # TODO: write the routine to delete the template created for this test
+
+    # Delete the message created for this test
+    # TODO: write the routine to delete the message created for this test
+    
     response = logout(session, config['login']['baseurl'])
 
 
@@ -165,11 +179,14 @@ def test_endpoint_list_approver_media():
     logging.debug(resp.text)
     assert resp.status_code == 200
 
-
-@with_setup(t_setup, t_teardown)
+# need to complete the TODOs above before enabling this test
+@nottest
+# @with_setup(t_setup, t_teardown)
 def test_endpoint_list_approver_message():
     global session, media_id_list, baseurl
-    logging.debug('')
+    logging.debug('Media for this test is: {}'.format(media_id_list))
+    apiurl = '/api/rest/approvalstatus' + str(message_id_list[0]) + '/messageApprovers'
+    resp = rest_request(session, type_of_call=call_type.get, baseurl=baseurl, apiurl=apiurl)
     pass
 
 

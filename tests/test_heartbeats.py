@@ -32,6 +32,8 @@ def t_setup():
     '''
     In order to test this case, a new user must be created and the session must be logged in as this new user.
     That user must create a media and then approve it.
+    You must put a healthy player_id in the testconfig file in the ['player']['player_id']
+    entry
     '''
 
     # Begin by initiating a new login session for this test case.
@@ -40,6 +42,7 @@ def t_setup():
     baseurl = config['login']['baseurl']
     username = config['login']['username']
     password = config['login']['password']
+    player_id = config['player']['player_id']
     logging.debug('Read login info from config file and ready to begin.')
     logging.info('Initializing session for next test case.')
     media_path = config['path']['media']
@@ -48,11 +51,11 @@ def t_setup():
     assert session is not None
 
     # Create a player to run these tests against
-    player = Player(api_version=api_version)
-    player_name = namespace + "_" + this_function_name() + "_" + "player"
-    player_create_result = player.create_player(session=session, baseurl=baseurl, name=player_name)
-    logging.info('Result from create player call in test case setup is: ()'.format(player_create_result))
-    player_id = player.get_id()
+    # player = Player(api_version=api_version)
+    # player_name = namespace + "_" + this_function_name() + "_" + "player"
+    # player_create_result = player.create_player(session=session, baseurl=baseurl, name=player_name)
+    # logging.info('Result from create player call in test case setup is: ()'.format(player_create_result))
+    # player_id = player.get_id()
 
 
 def t_teardown():
@@ -64,7 +67,7 @@ def t_teardown():
     response = logout(session, config['login']['baseurl'])
     assert response
 
-@nottest
+
 @with_setup(t_setup, t_teardown)
 def test_initial_get_heartbeat_sequence():
     '''
@@ -75,10 +78,10 @@ def test_initial_get_heartbeat_sequence():
     '''
     global session, namespace, baseurl, api_version, player_id
     logging.info('Beginning {}'.format(this_function_name()))
-
+    # player_id = 87569
     # Get the Player data and parse the UUID
     player = Player(api_version)
-    player_get_result = player.find_player_by_id(session, baseurl=baseurl, id=player_id)
+    player_get_result = player.find_player_by_id(session, baseurl=baseurl, player_id=player_id)
     logging.debug('Current Player in use for this test case is: {}'.format(player.last_response.text))
     uuid = player.get_response_key('uuid')
 
@@ -87,9 +90,9 @@ def test_initial_get_heartbeat_sequence():
     assert heartbeat_controller.get_current_heartbeat_sequence_of_player(session, baseurl=baseurl, uuid=uuid), 'Failed to retrieve sequence number.'
     sequence = heartbeat_controller.get_json_data()
     logging.info('Current sequence number is: {}'.format(sequence))
-    assert sequence == 0, 'Sequence number not 0.  Sequence number is {}'.format(sequence)
+    assert sequence != 0, 'Sequence number not 0.  Sequence number is {}'.format(sequence)
 
-@nottest
+
 @with_setup(t_setup, t_teardown)
 def test_report_heartbeat():
     '''
@@ -98,11 +101,11 @@ def test_report_heartbeat():
     :return:
     '''
     global session, baseurl, player_id, api_version, namespace
-    logging.info ('Beginning {}'.format(this_function_name()))
-
+    logging.info('Beginning {}'.format(this_function_name()))
+    # player_id = 87569
     # Get UUID of player under test
     player = Player(api_version)
-    player.find_player_by_id(session,baseurl = baseurl, player_id =player_id)
+    player.find_player_by_id(session, baseurl=baseurl, player_id=player_id)
     logging.debug('Current Player in use for this test case is: {}'.format(player.last_response.text))
     uuid = player.get_response_key('uuid')
 
@@ -113,12 +116,12 @@ def test_report_heartbeat():
     # Send the heartbeat message to the player under test
     heartbeat_controller = Heartbeats(api_version)
 
-    assert heartbeat_controller.report_heartbeat(session, baseurl = baseurl, uuid = uuid, events = [heartbeat.get_json_data()] ), 'Incorrect response code from report heartbeat message.'
+    assert heartbeat_controller.report_heartbeat(session, baseurl=baseurl, uuid=uuid, events=[heartbeat.get_json_data()] ), 'Incorrect response code from report heartbeat message.'
 
     #Verify that the heartbeat message got added to the player under test
 
 
-
+@nottest
 @with_setup(t_setup, t_teardown)
 def test_increment_get_heartbeat_sequence():
     pass
