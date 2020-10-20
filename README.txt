@@ -40,6 +40,9 @@ To run tests - set the Content Manager URL, username and password in the config/
   password = scala123
   player_username = player_TABN
   player_password = 12345678
+  
+  [player]
+  player_id = <the player id of a working player with a heartbeat>
 
 Then run:
 
