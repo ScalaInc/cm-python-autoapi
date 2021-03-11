@@ -5,6 +5,7 @@ from nose import with_setup
 import logging
 import logging.config
 import configparser
+
 from framework.constants import *
 from framework.authentication_api_rest import Auth_api
 from framework.fileupload_rest import File_upload
@@ -202,11 +203,11 @@ class test_cm_9707():
             logging.debug("Added media with id  = {} to playlist with id = {}".format(media,self.playlist_id_list[0]))
         #
         # for message in self.message_id_list:
-        #     playlist_object.add_media_to_normal_playlist(session = self.test_session,
+        #   playlist_object.add_media_to_normal_playlist(session = self.test_session,
         #                                                  baseurl = self.baseurl,
         #                                                  playlist_id = self.playlist_id_list[0],
         #                                                  media_id = message)
-        #     logging.debug("Added message with id  = {} to playlist with id = {}".format(message,self.playlist_id_list[0]))
+        # logging.debug("Added message with id  = {} to playlist with id = {}".format(message,self.playlist_id_list[0]))
 
         # Add subplaylist
         playlist_object.add_subplaylist_to_playlist(session = self.test_session,
@@ -215,9 +216,7 @@ class test_cm_9707():
                                                     name = playlist_name_1,
                                                     subplaylistId= self.playlist_id_list[1])
 
-
         # Assert that the setup is complete by counting the number of entries in the final playlist
-
         playlist_object.find_normal_playlist_by_id(session = self.test_session,
                                                    baseurl = self.baseurl,
                                                    playlist_id = self.playlist_id_list[0])
@@ -239,9 +238,8 @@ class test_cm_9707():
                                         baseurl = self.baseurl,
                                         playlist_id = self.playlist_id_list[0],
                                         field_change_dict=dto)
-    #                                        field_change_dict={'name': playlist_name_1,'workgroups':[{'id':self.workgroup_id_list[0],'owner':True}],'categories':[{'id':self.category_id_list[0]}]})
-
-
+        # field_change_dict={'name': playlist_name_1,'workgroups':[{'id':self.workgroup_id_list[0],'owner':True}],
+        # 'categories':[{'id':self.category_id_list[0]}]})
 
     def teardown(self):
 
@@ -255,7 +253,6 @@ class test_cm_9707():
             logging.debug("Deleted Playlist with ID = {} result = {}".format(playlist, result))
 
         # Delete workgroups
-
         workgroup_object = Workgroup(api_version_workgroups)
 
         for workgroup in self.workgroup_id_list:
@@ -275,7 +272,7 @@ class test_cm_9707():
 
         # Delete media and messages and templates
         media_object = Media(api_version_media)
-        for media in self.media_id_list: #+ self.message_id_list + self.template_id_list:
+        for media in self.media_id_list: # + self.message_id_list + self.template_id_list:
             result = media_object.delete_media_by_id(session = self.test_session,
                                                      baseurl = self.baseurl,
                                                      id = media)
@@ -283,25 +280,20 @@ class test_cm_9707():
 
         self.api_auth_object.logout()
 
-
-
-    def test_setup(self):
-        pass
-
     @parameterized([
-    #    param("name", "blubbosnubbo"), NOte: Name is tested in every other instance and does not need it's own test
-       param("controlledByAdManager",True),
-       param("description","hogobogologonogo"),
-       param("htmlDuration", 92),
-       param("imageDuration", 91),
-       param("maxDuration", 3),
-       param("minDuration", 13),
-       param("pickPolicy", "SHUFFLE"),
-    #     "playlistType": "MEDIA_PLAYLIST",
-    #    param("transition", {'positionY': 0, 'positionX': 14, 'id': 5, 'name': 'Dissolve'}),
+        # param("name", "blubbosnubbo"), NOte: Name is tested in every other instance and does not need it's own test
+        param("controlledByAdManager", True),
+        param("description", "hogobogologonogo"),
+        param("htmlDuration", 92),
+        param("imageDuration", 91),
+        param("maxDuration", 3),
+        param("minDuration", 13),
+        param("pickPolicy", "SHUFFLE"),
+        # param("playlistType", "MEDIA_PLAYLIST"),
+        # param("transition", {'positionY': 0, 'positionX': 14, 'id': 5, 'name': 'Dissolve'}),
         param("transitionDuration", 13)
     ])
-    def test_modify_playlist(self, p_key,p_value):
+    def test_modify_playlist(self, p_key, p_value):
         """
         This test validates that the preceding parameterized list of values can be modified by the /api/rest/playlists/<id>/partial
         call:
@@ -309,17 +301,19 @@ class test_cm_9707():
         :param p_value:
         :return:
         """
-        logging.debug("Now modifying playlist {} to be {}".format(p_key,p_value))
+        logging.debug("Now modifying playlist {} to be {}".format(p_key, p_value))
         playlist_obj = Playlist(api_version_playlist)
-        fields = None# 'id,name,controlledByAdManager,playlistType,pickPolicy,transitionDuration,readOnly,healthy'
-        playlist_obj.find_normal_playlist_by_id(session = self.test_session,
-                                                baseurl = self.baseurl,
-                                                playlist_id = self.playlist_id_list[0],
-                                                fields = fields)
+        fields = None  # 'id,name,controlledByAdManager,playlistType,pickPolicy,transitionDuration,readOnly,healthy'
+        time.sleep(1) # added because there seems to be a race condition when getting the playlist fields may not have
+        # been updated before retrieving them
+        playlist_obj.find_normal_playlist_by_id(session=self.test_session,
+                                                baseurl=self.baseurl,
+                                                playlist_id=self.playlist_id_list[0],
+                                                fields=fields)
         playlist_dto = playlist_obj.last_response.json()
 
         logging.debug("Found playlist under test: {}".format(playlist_dto))
-        playlist_dto.pop('id') #The ID is a system field which is always returned
+        playlist_dto.pop('id')  # The ID is a system field which is always returned
         try:
             playlist_dto.pop(p_key)
         except KeyError:
@@ -330,28 +324,32 @@ class test_cm_9707():
         playlist_dto["name"] = p_key + " test"
 
         logging.debug(logging.debug("Modifying playlist_under test: {}".format(playlist_dto)))
-
-        assert playlist_obj.update_partial_playlist(session = self.test_session,
-                                                    baseurl = self.baseurl,
-                                                    playlist_id = self.playlist_id_list[0],
-                                                    playlist = playlist_dto)
-
-        playlist_obj.find_normal_playlist_by_id(session = self.test_session,
-                                                baseurl = self.baseurl,
-                                                playlist_id = self.playlist_id_list[0])
+        time.sleep(1) # added because there seems to be a race condition when getting the playlist fields may not have
+        # been updated before retrieving them
+        assert playlist_obj.update_partial_playlist(session=self.test_session,
+                                                    baseurl=self.baseurl,
+                                                    playlist_id=self.playlist_id_list[0],
+                                                    playlist=playlist_dto)
+        time.sleep(1) # added because there seems to be a race condition when getting the playlist fields may not have
+        # been updated before retrieving them
+        playlist_obj.find_normal_playlist_by_id(session=self.test_session,
+                                                baseurl=self.baseurl,
+                                                playlist_id=self.playlist_id_list[0])
 
         if type(p_value) is dict:
-            #This is ugly but a good way to compare the two dicts.  Create a hash and make sure digests are the same.
-            #Hey!  This doesn't work.  I'll do this another way.
-            p_value_string = json.dumps(p_value, sort_keys = True)
-            playlist_value_string = json.dumps(playlist_obj.get_json_data()[p_key], sort_keys = True)
-            logging.debug('compare two dicts {} and {}'.format(p_value_string,playlist_value_string))
-            one = hashlib.sha1(bytes(p_value_string,'ascii')).hexdigest()
-            two = hashlib.sha1(bytes(playlist_value_string,'ascii')).hexdigest
+            # This is ugly but a good way to compare the two dicts.  Create a hash and make sure digests are the same.
+            # Hey!  This doesn't work.  I'll do this another way.
+            p_value_string = json.dumps(p_value, sort_keys=True)
+            playlist_value_string = json.dumps(playlist_obj.get_json_data()[p_key], sort_keys=True)
+            logging.debug('compare two dicts {} and {}'.format(p_value_string, playlist_value_string))
+            one = hashlib.sha1(bytes(p_value_string, 'ascii')).hexdigest()
+            two = hashlib.sha1(bytes(playlist_value_string, 'ascii')).hexdigest
             assert one == two, 'Hashes of dicts found in playlist did not match'
         else:
-            logging.info("After test, expected value of {} to be {} but found {}".format(p_key,p_value,str(playlist_obj.get_response_key(p_key))))
-            assert playlist_obj.get_response_key(p_key) == p_value , "Expected value of " + p_key + " to be " + str(p_value) +" but found " + str(playlist_obj.get_response_key(p_key))
+            logging.info("After test, expected value of {} to be {} but found {}"
+                         .format(p_key, p_value, str(playlist_obj.get_response_key(p_key))))
+            assert playlist_obj.get_response_key(p_key) == p_value , "Expected value of " + p_key + " to be " \
+                + str(p_value) + " but found " + str(playlist_obj.get_response_key(p_key))
 
         number_of_items_in_playlist = len(playlist_obj.get_response_key("playlistItems"))
 
@@ -617,6 +615,8 @@ class test_cm_9703():
         #     logging.debug("Deleted Media with id = {} result = {}".format(media,result))
 
         self.api_auth_object.logout()
+
+    @with_setup(setup=setup)
     def test_add_n_media_item(self):
         playlist_object = Playlist(api_version_playlist)
 
@@ -627,18 +627,19 @@ class test_cm_9703():
             sd = sd + datetime.timedelta(days = 1)
             ed = sd + datetime.timedelta(days = 1)
             logging.debug('index into media_id_list is : {}'.format(media_index))
-            logging.debug('cirremt od of media_id_list is : {}'.format(media_index % len(self.media_id_list)))
-            media_item_dto = playlist_object.getDefaultPlaylistItem(playlistItemType.MEDIA_ITEM,
-                                                            item_id = self.media_id_list[media_index % len(self.media_id_list)],
-                                                            player_id = self.player_id_list[0],
-                                                            player_group_id = self.player_group_id_list[0],
-                                                            start_date = str(sd),
-                                                            end_date = str(ed))
-            media_index += 1
+            logging.debug('current od of media_id_list is : {}'.format(media_index % len(self.media_id_list)))
+            # media_item_dto = playlist_object.getDefaultPlaylistItem(playlistItemType.MEDIA_ITEM,
+            #                                                 item_id = self.media_id_list[media_index % len(self.media_id_list)],
+            #                                                 player_id = self.player_id_list[0],
+            #                                                 player_group_id = self.player_group_id_list[0],
+            #                                                 start_date = str(sd),
+            #                                                 end_date = str(ed))
+
             assert playlist_object.append_playlistItem(session = self.test_session,
                                             baseurl = self.baseurl,
                                             playlist_id = self.playlist_id_list[0],
-                                            playlist_item_dto=media_item_dto),'Did not receive 200 when appending playlist'
+                                            playlist_item_dto=self.media_id_list[i]),'Did not receive 200 when appending playlist'
+            media_index += 1
 
         playlist_object.find_normal_playlist_by_id(session = self.test_session,
                                                    baseurl = self.baseurl,
@@ -655,7 +656,7 @@ class test_cm_9703():
             sd = sd + datetime.timedelta(days = 1)
             ed = sd + datetime.timedelta(days = 1)
             logging.debug('index into media_id_list is : {}'.format(media_index))
-            logging.debug('cirremt od of media_id_list is : {}'.format(media_index % len(self.media_id_list)))
+            logging.debug('current od of media_id_list is : {}'.format(media_index % len(self.media_id_list)))
             playlist_item_dto = playlist_object.getDefaultPlaylistItem(playlistItemType.SUB_PLAYLIST,
                                                                     item_id = self.playlist_id_list[1],
                                                                     player_id = self.player_id_list[0],
@@ -666,7 +667,7 @@ class test_cm_9703():
             assert playlist_object.append_playlistItem(session = self.test_session,
                                                 baseurl = self.baseurl,
                                                 playlist_id = self.playlist_id_list[0],
-                                                playlist_item_dto=playlist_item_dto), "Did not receive 200 when appending to playlist"
+                                                playlist_item_dto=self.media_id_list[i]), "Did not receive 200 when appending to playlist"
             elapsed_timedelta = playlist_object.last_response.elapsed
             #logging.info("APPENDTIME {} days {} seconds {} microseconds".format(elapsed_timedelta.days,elapsed_timedelta.seconds,elapsed_timedelta.microseconds))
             elapsed_seconds = elapsed_timedelta.seconds + elapsed_timedelta.microseconds/1000000

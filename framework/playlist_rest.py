@@ -477,7 +477,7 @@ class Playlist(framework_object):
         else:
             return False
 
-    def update_partial_playlist(self,session,baseurl,playlist_id,playlist):
+    def update_partial_playlist(self, session, baseurl, playlist_id, playlist):
         """
         PUT /api/rest/playlists/<id>/partial
         Rapidly update a playlist.  This API call is not advertised in the api docs - it was created for dot2dot as
@@ -486,7 +486,7 @@ class Playlist(framework_object):
         unaffected
         :param session: authenticated session object
         :param baseurl:
-        :param id: ID of playlist
+        :param playlist_id: ID of playlist
         :param playlist: A DTO containing the playlist modifications
         :return: True if response code is 200, false otherwise
         """
@@ -538,11 +538,11 @@ class Playlist(framework_object):
         }
         :return:
         """
-        append_playlist_apiurl = '/api/rest/playlists/' + str(playlist_id) + '/playlistItems'
+        append_playlist_apiurl = '/api/rest/playlists/' + str(playlist_id) + '/playlistItems/' + str(playlist_item_dto)
 
         # if 'playlistItemType' not in playlist_item_dto:
-        #     logging.debug("Invalid playlist dto item provided to append to playlist call: {}".format(playlist_item_dto))
-        #     return False
+        # logging.debug("Invalid playlist dto item provided to append to playlist call: {}".format(playlist_item_dto))
+        # return False
         #
         # if playlist_item_dto['playlistItemType'] == 'MEDIA_ITEM':
         #     # Check that the playlist
@@ -555,8 +555,8 @@ class Playlist(framework_object):
         self.last_response = rest_request(session=session,
                                           baseurl=baseurl,
                                           apiurl=append_playlist_apiurl,
-                                          type_of_call=call_type.post,
-                                          payload_params=playlist_item_dto)
+                                          type_of_call=call_type.put)
+
         try:
             logging.debug('Made call to POST {}.  Response code = {}.  Response = {}'.format(append_playlist_apiurl,
                                                                                         self.last_response.status_code,

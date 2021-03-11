@@ -36,7 +36,7 @@ def create_channel(channel_name, channel_description, channel_type, frame_id, ch
     global session, namespace,baseurl, frameset_id_list
 
     channel_create_apiurl = '/api/rest/channels'
-    channel_frameset = {'id':frame_id}
+    channel_frameset = {'id': frame_id}
 
     channel_parameters = {'name':channel_name,'description':channel_description,'type':channel_type,'frameset':channel_frameset, 'playDedicatedAudioTrack':channel_playDedicated_audio}
     resp = rest_request(session, type_of_call=call_type.post, baseurl=baseurl, apiurl = channel_create_apiurl, payload_params= channel_parameters)
@@ -66,7 +66,7 @@ def t_setup():
     '''
 
     # Begin by initiating a new login session for this test case.
-    global config, session,frameset_id_list, user_id_list,baseurl
+    global config, session, frameset_id_list, user_id_list, baseurl, channel_id_list
     logging.info('Beginning test setup')
     baseurl = config['login']['baseurl']
     username = config['login']['username']
@@ -80,19 +80,34 @@ def t_setup():
 
     #  Acquire a list of the id's of valid framesets on this system
     get_frameset_apiurl = '/api/rest/framesetTemplates'
-    frameset_query_params = {'limit':1000, 'fields':'id'}
+    frameset_query_params = {'limit': 1000, 'fields': 'id'}
     resp = rest_request(session,type_of_call=call_type.get, baseurl=baseurl, apiurl = get_frameset_apiurl, query_params= frameset_query_params)
     logging.debug('GET all frameset IDs request response is: {}'.format(resp.text))
     frameset_list = resp.json()['list']
     assert len(resp.json()['list']) != 0, 'No framesets datafilled on system. Test case fails.'
     frameset_id_list = [item['id'] for item in frameset_list]
+    get_channels_apiurl = '/api/rest/channels'
+    channel_query_params = {'limit': 1000, 'fields': 'id'}
+    resp = rest_request(session, type_of_call=call_type.get, baseurl=baseurl, apiurl=get_channels_apiurl, query_params=channel_query_params)
+    channel_list = []
+    try:
+        channel_list = resp.json()['list']
+    except KeyError:
+        channel_list = []
+    channel_id_list = []
+    if len(channel_list) != 0:
+        channel_id_list = [item['id'] for item in channel_list]
 
 def t_teardown():
-    global session,baseurl, media_id_list, user_id_list
+    global session, baseurl, media_id_list, user_id_list, channel_id_list
+    if len(channel_id_list) != 0:
+        for channel_id in channel_id_list:
+            delete_channel(channel_id)
     response = logout(session, config['login']['baseurl'])
     assert response
 
-@with_setup(t_setup,t_teardown)
+
+@with_setup(t_setup, t_teardown)
 def test_endpoint_create_delete_channel():
     '''
     Basic Channel Creation with name and description
@@ -121,6 +136,7 @@ def test_endpoint_create_delete_channel():
     logging.debug('Status code from Delete channel is {}, response is {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 204, 'Unexpected status code during delete channel.  Expected 204, received {}'.format(resp.status_code)
 
+
 @with_setup(t_setup,t_teardown)
 def test_endpoint_duplicate_channel():
     '''
@@ -128,7 +144,7 @@ def test_endpoint_duplicate_channel():
     :return:
     '''
 
-    global session, namespace,baseurl, frameset_id_list
+    global session, namespace, baseurl, frameset_id_list, channel_id_list
     # Create a channel to be duplicated
 
     channel_name = namespace  + '_' + this_function_name()
@@ -159,12 +175,12 @@ def test_endpoint_duplicate_channel():
 
     # Ok.  Validate that the duplicate record matches the original
     assert resp.json()['name'] != dup_resp.json()['name'],'Name of duplicate matches name of original'
-#    assert resp.json()['description'] == dup_resp.json()['description'], 'Description of duplicate does not match original.  Orig = {}, dup = {}'.format(resp.json()['description'],dup_resp.json()['description'])
+    # assert resp.json()['description'] == dup_resp.json()['description'], 'Description of duplicate does not match original.  Orig = {}, dup = {}'.format(resp.json()['description'],dup_resp.json()['description'])
     assert resp.json()['type'] == dup_resp.json()['type'], 'Type of duplicate does not match original'
     assert resp.json()['playDedicatedAudioTrack'] == dup_resp.json()['playDedicatedAudioTrack'], 'playDedicatedAudioTrack of duplicate does not match original'
-#    logging.debug('Original frameset is {}'.format(resp.json()['frameset']))
-#    logging.debug('Duplicate frameset is {}'.format(dup_resp.json()['frameset']))
-#    assert resp.json()['framesCounter'] == dup_resp.json()['framesCounter'],'duplicate has different number of frames than original.  Orig {} Dup {}'.format(resp.json()['framesCounter'],dup_resp.json()['framesCounter'])
+    # logging.debug('Original frameset is {}'.format(resp.json()['frameset']))
+    # logging.debug('Duplicate frameset is {}'.format(dup_resp.json()['frameset']))
+    # assert resp.json()['framesCounter'] == dup_resp.json()['framesCounter'],'duplicate has different number of frames than original.  Orig {} Dup {}'.format(resp.json()['framesCounter'],dup_resp.json()['framesCounter'])
 
     # Clean up by deleting the two two records created during testing
     delete_apiurl = '/api/rest/channels/' + str(channel_id)
@@ -174,7 +190,7 @@ def test_endpoint_duplicate_channel():
     logging.debug('Delete duplicate apiurl = ' + delete_dup_apiurl)
 
     resp = rest_request(session, type_of_call=call_type.delete, baseurl=baseurl,apiurl = delete_apiurl)
-    dup_resp =  rest_request(session, type_of_call=call_type.delete, baseurl=baseurl,apiurl = delete_dup_apiurl)
+    dup_resp = rest_request(session, type_of_call=call_type.delete, baseurl=baseurl,apiurl = delete_dup_apiurl)
     assert resp.status_code == dup_resp.status_code == 204, 'Could not validate that test channels were '
 
 @with_setup(t_setup,t_teardown)
@@ -185,7 +201,7 @@ def test_endpoint_find_channel():
     Delete channel created in this test by using DELETE /api/rest/channels/
     :return:
     '''
-    global session, namespace,baseurl, frameset_id_list
+    global session, namespace,baseurl, frameset_id_list, channel_id_list
 
     channel_name = namespace  + '_' + this_function_name()
     channel_description = namespace + '_' + this_function_name() + ' Channel Description'
@@ -224,7 +240,7 @@ def test_endpoint_list_channels():
     Delete said channels
     :return:
     '''
-    global session, namespace,baseurl, frameset_id_list
+    global session, namespace, baseurl, frameset_id_list, channel_id_list
 
     channel_name_master = namespace + '_' + this_function_name()
     channel_description = 'namespace' +'_' + this_function_name() + ' Channel Description'
@@ -235,16 +251,17 @@ def test_endpoint_list_channels():
     channel_id_list = []
     for frame_id in frameset_id_list:
         channel_name = channel_name_master + '_' + str(frame_id)
-        channel_id_list.append(create_channel(channel_name = channel_name,
-                       channel_description = channel_description,
-                       channel_type= channel_type,
-                       frame_id = frame_id,
+        channel_id_list.append(create_channel(channel_name=channel_name,
+                       channel_description=channel_description,
+                       channel_type=channel_type,
+                       frame_id=frame_id,
                        channel_playDedicated_audio=channel_playDedicated_audio))
     logging.debug('List of channel ids created for this test is: {}'.format(channel_id_list))
-    assert None not in channel_id_list, ('At least on channel was not created in channel create loop')
+    assert None not in channel_id_list, ('At least one channel was not created in channel create loop')
 
-    #List the channels created above.  Verify that all of the channels created in this test case also appear in the list results
-    get_query_parameters = {'limit':900,'fields':'id'}
+    # List the channels created above.  Verify that all of the channels created in this test case also appear in
+    # the list results
+    get_query_parameters = {'limit': 900, 'fields': 'id'}
     get_apiurl = '/api/rest/channels'
 
     resp = rest_request(session, type_of_call=call_type.get, baseurl = baseurl, apiurl = get_apiurl, query_params=get_query_parameters)
@@ -266,11 +283,12 @@ def test_endpoint_list_channels():
     assert found_all_created_channels, 'List of channels returned from list did not match list of created channels.'
     logging.debug('List of channels returned from list channel API call and those created from this test case')
 
-
+    # Deleting of channels now takes place in t_teardown
     # Delete all channels created in this test - Cleanup
-    logging.debug('Delete these channels: {}'.format(channel_id_list))
-    for deleted_channel_id in channel_id_list:
-        delete_channel(deleted_channel_id)
+    # logging.debug('Delete these channels: {}'.format(channel_id_list))
+    #
+    # for deleted_channel_id in channel_id_list:
+    #     delete_channel(deleted_channel_id)
 
 @with_setup(t_setup,t_teardown)
 def test_endpoint_multi_update_channel():
