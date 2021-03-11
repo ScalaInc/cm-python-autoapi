@@ -103,3 +103,6 @@ isCompressedRequests = True
 
 [player]
 player_id = 87569
+
+[distribution]
+distribution_server_id = 1043

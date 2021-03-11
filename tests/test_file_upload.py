@@ -87,11 +87,11 @@ def test_endpoint_file_upload_file():
     file_upload_path = config['path']['media']
 
     # Build JSON parameters for file upload in
-    file_upload_parameter_list = {'filename':local_file_name,'filepath':file_upload_path,'uploadType':'media_item'}
+    file_upload_parameter_list = {'filename': local_file_name, 'filepath': file_upload_path, 'uploadType': 'media_item'}
 
     # Begin Media upload.   Start with Init call
     resp = rest_request(session, call_type.post, baseurl=config['login']['baseurl'], apiurl='/api/rest/fileupload/init',
-                        query_params = None, payload_params= file_upload_parameter_list,  proxy=False)
+                        query_params = None, payload_params=file_upload_parameter_list,  proxy=False)
     logging.info('Response from init call is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 200, 'Received incorrect response code after Media file upload init call.'
     media_id = resp.json()['mediaId']
@@ -105,7 +105,7 @@ def test_endpoint_file_upload_file():
     file = open(config['path']['media'] + local_file_name,'rb')
     file_upload_put_apiurl = '/api/rest/fileupload/part/'+json_init_response['uuid'] + '/0'
 
-    #Send the put request to upload the file
+    # Send the put request to upload the file
     resp = rest_request(session,call_type.put,baseurl = config['login']['baseurl'], apiurl=file_upload_put_apiurl, file_object = file)
     logging.info('Response from file put call is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     file.close()
@@ -113,7 +113,7 @@ def test_endpoint_file_upload_file():
 
     # Commit the change
     commit_apiurl = '/api/rest/fileupload/complete/' + json_init_response['uuid']
-    resp = rest_request(session,call_type.post, baseurl = config['login']['baseurl'], apiurl=commit_apiurl)
+    resp = rest_request(session,call_type.post, baseurl=config['login']['baseurl'], apiurl=commit_apiurl)
     logging.info('Response  from file complete call is: status_code =  {}, response = {}'.format(resp.status_code,resp.text))
     assert resp.status_code == 204, 'Received incorrect response code after media upload complete call.'
 

@@ -4,8 +4,9 @@ from framework.player_metadata_rest import Player_meta_data
 from framework.constants import *
 from framework.http_rest import rest_request
 import logging
-import json
 import logging.config
+import json
+
 
 class Player(framework_object):
     '''
@@ -13,13 +14,14 @@ class Player(framework_object):
     '''
     apiurl = '/api/rest/players'
 
-    def __init__(self,api_version):
+    def __init__(self, api_version):
         '''
         Constructor initializes api version
         :return: VOID
         '''
         super().__init__(api_version)
-    # 1053 for GPG localhost:8080/ContentManager
+
+    # 1043 for GPG localhost:8080/ContentManager
     # 1041 for Docker Kubernetes
     # There are two places where you have to set distribution_server_id
     def create_player(self,
@@ -28,7 +30,7 @@ class Player(framework_object):
                       name,
                       description=None,
                       type="SCALA",
-                      distribution_server_id=1053
+                      distribution_server_id=1043
                       ):
         
         '''
@@ -64,7 +66,7 @@ class Player(framework_object):
                                 type = 'SCALA',
                                 start_at_player_number=1,
                                 number_of_players=1,
-                                distribution_server_id=1053
+                                distribution_server_id=1043
                                 ):
         '''
         One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
