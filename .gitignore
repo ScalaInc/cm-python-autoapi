@@ -3,8 +3,7 @@
 /venv/
 /framework/__pycache__/
 /logs/
-/.idea/
-*.xml
+*testresults*
 *.xml.html
 *.bak
 *.html
