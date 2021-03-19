@@ -55,6 +55,7 @@ def setup():
     baseurl = config['login']['baseurl']
     username = config['login']['username']
     password = config['login']['password']
+    distribution_server_id = config['distribution']['distribution_server_id']
     logging.debug('Read login info from config file and ready to begin.')
     logging.info('Initializing session for test module setup.')
 
@@ -149,6 +150,7 @@ def t_setup():
     logging.info('Beginning test setup')
     username = config['login']['username']
     password = config['login']['password']
+    distribution_server_id = config['distribution']['distribution_server_id']
     logging.debug('Read login info from config file and ready to begin.')
     logging.info('Initializing session for next test case.')
     media_path = config['path']['media']
