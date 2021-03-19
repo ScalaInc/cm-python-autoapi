@@ -6,7 +6,7 @@ from framework.http_rest import rest_request
 import logging
 import logging.config
 import json
-
+import configparser
 
 class Player(framework_object):
     '''
@@ -30,7 +30,7 @@ class Player(framework_object):
                       name,
                       description=None,
                       type="SCALA",
-                      distribution_server_id=1043
+                      distribution_server_id=1
                       ):
         
         '''
@@ -66,7 +66,7 @@ class Player(framework_object):
                                 type = 'SCALA',
                                 start_at_player_number=1,
                                 number_of_players=1,
-                                distribution_server_id=1043
+                                distribution_server_id=1
                                 ):
         '''
         One cannot "assume" that the distribution_server_id is 1. Apparently the main Point to Point server is not always 1.
