@@ -48,7 +48,7 @@ class Templates(framework_object):
         logging.debug('Sent DELETE /api/rest/templates/{} response code = {}, response = {}'.format(str(id),
                                                                                                     self.last_response.status_code,
                                                                                                     self.last_response.text))
-        if self.last_response == 204:
+        if self.last_response.status_code == 204:
             return True
         else:
             return False

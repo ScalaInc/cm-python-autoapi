@@ -1077,7 +1077,7 @@ class test_dot2dot_cm_9704():
                 assert player_obj.delete_player_by_id(session=self.test_session,
                                                       baseurl=self.baseurl,
                                                       id=player_id),\
-                    "Failed to delete player {} with id {}".format(player['name'],player['id'])
+                    "Failed to delete player {} with id {}".format(player['name'], player['id'])
 
     @with_setup(setup=fake_setup, teardown=fake_teardown)
     def test_06_delete_player_groups(self):
