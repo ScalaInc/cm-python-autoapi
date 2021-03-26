@@ -37,6 +37,7 @@ template_id = 0
 frameset_id = 0
 channel_id = 0
 player_id = 0
+distribution_server_id = 0
 player_name = ""
 player_description = ""
 channel_name = ""
@@ -111,7 +112,7 @@ def setup():
     player_name = 'abtest_' + namespace
     player_description = 'The player used in ap testing to validate player fields in namespace ' + namespace
     player = Player(api_version_player)
-    player.create_player(setup_session, baseurl, name=player_name, description=player_description)
+    player.create_player(setup_session, baseurl, name=player_name, description=player_description, distribution_server_id=distribution_server_id)
     player_id = player.get_response_key('id')
 
     response = logout(setup_session, baseurl=baseurl)

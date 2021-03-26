@@ -339,6 +339,29 @@ class Users(framework_object):
                                  fields = fields,
                                  search = search)
 
+    def return_user_list(self, session, baseurl, limit, offset=0, sort=None, filters=None, fields=None, search=None):
+        list_users_apiurl = '/api/rest/users'
+
+        query_parameters = {'limit':limit, 'offset':offset}
+
+        if sort != None:
+            query_parameters['sort'] = sort
+        if filters != None:
+            query_parameters['filters'] = filters
+        if fields != None:
+            query_parameters['fields'] = fields
+        if search != None:
+            query_parameters['search'] = search
+
+        self.last_response = rest_request(session,
+                                          type_of_call=call_type.get,
+                                          baseurl=baseurl,
+                                          apiurl=list_users_apiurl,
+                                          query_params=query_parameters)
+
+        return self.last_response.text
+
+
     def update_user(self, session, baseurl, identifier, update_user_dict):
         """
         Wrapper around /api/rest/users/{id}
