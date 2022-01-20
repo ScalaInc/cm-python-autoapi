@@ -1,13 +1,13 @@
 #[DEFAULT]
 #
 [login]
-baseurl = http://scamd-cm-d-01.stratacache.com:8080/ContentManager
-username = administrator
-password = scala123
-
-#baseurl = http://localhost:8080/ContentManager
+#baseurl = http://scamd-cm-d-01.stratacache.com:8080/ContentManager
 #username = administrator
-#password = admin1234
+#password = scala123
+
+baseurl = http://localhost:8080/ContentManager
+username = administrator
+password = admin1234
 
 #baseurl = http://cmdocker.scala.com:8080/ContentManager
 #baseurl = http://faraday.scala.com:33150/ContentManager
@@ -109,4 +109,4 @@ isCompressedRequests = True
 player_id = 87569
 
 [distribution]
-distribution_server_id = 1
+distribution_server_id = 1043
