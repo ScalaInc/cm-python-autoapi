@@ -24,7 +24,7 @@ inside the virtual env - along with all the python tools - like pip.
 
 Your prompt will look like this:
 
-   (autoapi_env)rkaye@ubuntu:~/GitMigration/cm-python-autotest$ 
+   (venv) cm-python-autoapi 
 
 Now install all project dependancies:
 
