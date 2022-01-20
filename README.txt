@@ -10,7 +10,7 @@ Install virtualenv globally:
 
 Create virtualenv in project directory:  
 
-   virtualenv -p <path to python3> autoapi_env
+   virtualenv -p <path to python3> venv
 
 You will find that an autoapi_env directory has appears in the project root directory
 
