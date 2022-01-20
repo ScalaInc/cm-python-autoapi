@@ -1,5 +1,4 @@
 Jinja2>=2.10.1
-<<<<<<< HEAD
 MarkupSafe>=2.0.1
 PyYAML==6.0
 Pygments==2.11.2
@@ -12,17 +11,3 @@ tabulate==0.8.9
 
 pip~=21.3.1
 setuptools~=60.5.0
-=======
-MarkupSafe==0.23
-PyYAML==5.4
-Pygments==2.7.4
-Sphinx==1.2.2
-docutils==0.11
-nose==1.3.3
-nose-parameterized==0.3.5
-requests==2.20.0
-tabulate==0.7.3
-
-pip~=20.1.1
-setuptools~=49.2.0
->>>>>>> 0f8277784fc74b2f52abe76418300f2040680ce5
