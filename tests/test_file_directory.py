@@ -3,7 +3,7 @@ from nose import with_setup
 from nose.tools import nottest
 import logging
 import logging.config
-from framework.file_driectory_rest import FileDirectory
+from framework.file_directory_rest import FileDirectory
 from framework.authentication_rest import login, logout
 from framework.common_functions_rest import *
 from framework.http_rest import *

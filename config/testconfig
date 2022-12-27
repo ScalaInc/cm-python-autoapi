@@ -80,6 +80,7 @@ api_version_messages = 1.0
 api_version_channels = 1.0
 api_version_framesets = 1.0
 api_version_network = 1.0
+api_version_networks = 1.0
 api_version_storage = 1.0
 api_version_users = 1.0
 api_version_roles = 1.0
@@ -109,4 +110,4 @@ isCompressedRequests = True
 player_id = 87569
 
 [distribution]
-distribution_server_id = 1043
+distribution_server_id = 1

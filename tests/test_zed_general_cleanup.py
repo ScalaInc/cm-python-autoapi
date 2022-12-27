@@ -8,7 +8,7 @@ from framework.http_rest import rest_request
 from framework.users_rest import Users
 from framework.roles_rest import Roles
 from framework.storage_rest import Storage
-from framework.file_driectory_rest import FileDirectory
+from framework.file_directory_rest import FileDirectory
 from framework.templates_rest import Templates
 import datetime
 import time
